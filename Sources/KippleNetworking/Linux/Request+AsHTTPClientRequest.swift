@@ -5,6 +5,7 @@
     import AsyncHTTPClient
     import Foundation
     import NIO
+    import NIOFoundationCompat
 
     extension Request {
         func asHTTPClientRequest(with environment: Environment) throws -> AsyncHTTPClient.HTTPClientRequest {
@@ -48,13 +49,13 @@
             switch contentType {
             case .json:
                 let data = try parameters.asJSONSerializedData()
-                clientRequest.body = .bytes(.init(data: data))
+                clientRequest.body = .bytes(ByteBuffer(data: data))
             case .wwwFormURLEncoded:
                 var urlComponents = URLComponents()
                 urlComponents.setQueryItems(with: parameters)
 
                 if let data = urlComponents.percentEncodedQuery?.data(using: .utf8) {
-                    clientRequest.body = .bytes(.init(data: data))
+                    clientRequest.body = .bytes(ByteBuffer(data: data))
                 } else {
                     // TODO: Throw Error
                 }
