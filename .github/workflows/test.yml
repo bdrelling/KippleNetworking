@@ -44,28 +44,33 @@ jobs:
     # Available Docker Images: https://hub.docker.com/_/swift/
     container: swift:5.6
     needs: [prepare]
+    env:
+      DEPLOY_DIRECTORY: ${{ env.DEPLOY_DIRECTORY }}/linux
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run Tests
         run: sh ./scripts/swift_test.sh
-      - name: Upload Step Output
-        uses: actions/upload-artifact@v1
-        with:
-          name: Output (Linux)
-          path: ${{ env.DEPLOY_DIRECTORY }}
   swift_test_macos:
     name: swift test (macOS)
     # Available Runners: https://github.com/actions/virtual-environments
     runs-on: macos-12
     needs: [prepare]
+    env:
+      DEPLOY_DIRECTORY: ${{ env.DEPLOY_DIRECTORY }}/macos
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run Tests
         run: sh ./scripts/swift_test.sh
+  upload_step_output:
+    name: Upload Step Output
+    # Available Runners: https://github.com/actions/virtual-environments
+    runs-on: ubuntu-latest
+    needs: [swift_test_linux, swift_test_macos]
+    steps:
       - name: Upload Step Output
         uses: actions/upload-artifact@v1
         with:
-          name: Output (macOS)
+          name: Output
           path: ${{ env.DEPLOY_DIRECTORY }}
