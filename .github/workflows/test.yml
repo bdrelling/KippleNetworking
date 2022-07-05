@@ -45,7 +45,7 @@ jobs:
     container: swift:5.6
     needs: [prepare]
     env:
-      DEPLOY_DIRECTORY: '${{ env.DEPLOY_DIRECTORY }}/linux'
+      DEPLOY_DIRECTORY: deploy/linux
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -57,7 +57,7 @@ jobs:
     runs-on: macos-12
     needs: [prepare]
     env:
-      DEPLOY_DIRECTORY: '${{ env.DEPLOY_DIRECTORY }}/macos'
+      DEPLOY_DIRECTORY: deploy/macos
     steps:
       - name: Checkout
         uses: actions/checkout@v2
