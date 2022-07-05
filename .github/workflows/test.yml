@@ -37,20 +37,32 @@ jobs:
   #         brew install swiftformat
   #     - name: Run Danger
   #       run: sh ./scripts/danger_lint.sh
-  spm:
-    name: SPM (${{ matrix.os }})
+  swift_test_linux:
+    name: swift test (Linux)
     # Available Runners: https://github.com/actions/virtual-environments
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     container: swift:5.6
     needs: [prepare]
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run Tests
-        run: sh ./scripts/swift_build.sh
+        run: sh ./scripts/swift_test.sh
+      - name: Upload Step Output
+        uses: actions/upload-artifact@v1
+        with:
+          name: SPM Output
+          path: ${{ env.DEPLOY_DIRECTORY }}
+  swift_test_macos:
+    name: swift test (macOS)
+    # Available Runners: https://github.com/actions/virtual-environments
+    runs-on: macos-12
+    needs: [prepare]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run Tests
+        run: sh ./scripts/swift_test.sh
       - name: Upload Step Output
         uses: actions/upload-artifact@v1
         with:
