@@ -21,8 +21,6 @@ jobs:
         uses: styfle/cancel-workflow-action@0.10.0
         with:
           access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v2
   # lint:
   #   name: Lint
   #   runs-on: macos-11
@@ -49,6 +47,8 @@ jobs:
     env:
       DEPLOY_DIRECTORY: deploy/linux
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Run Tests
         run: sh ./scripts/swift_test.sh
   swift_test_macos:
@@ -59,6 +59,8 @@ jobs:
     env:
       DEPLOY_DIRECTORY: deploy/macos
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Run Tests
         run: sh ./scripts/swift_test.sh
   upload_step_output:
