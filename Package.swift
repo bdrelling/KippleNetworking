@@ -23,8 +23,8 @@ let package = Package(
             dependencies: [
                 .product(
                     name: "AsyncHTTPClient",
-                    package: "async-http-client"//,
-//                    condition: .when(platforms: [.linux])
+                    package: "async-http-client",
+                    condition: .when(platforms: [.linux])
                 ),
                 .product(
                     name: "UtilityBeltNetworking",

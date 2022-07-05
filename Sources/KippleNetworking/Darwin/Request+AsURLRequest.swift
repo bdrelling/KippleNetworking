@@ -20,11 +20,20 @@
 
             return try .init(
                 url: url,
-                method: self.method,
+                method: .init(rawValue: self.method.rawValue) ?? .get,
                 parameters: parameters,
                 headers: headers,
-                encoding: self.encoding
+                encoding: self.utilityBeltEncoding(for: self.encoding)
             )
+        }
+
+        private func utilityBeltEncoding(for encoding: ParameterEncoding) -> UtilityBeltNetworking.ParameterEncoding {
+            switch encoding {
+            case let .httpBody(bodyEncoding):
+                return .httpBody(.init(rawValue: bodyEncoding.rawValue) ?? .json)
+            case .queryString:
+                return .queryString
+            }
         }
     }
 
