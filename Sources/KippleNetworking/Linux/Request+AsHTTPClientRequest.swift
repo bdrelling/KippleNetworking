@@ -4,9 +4,10 @@
 
     import AsyncHTTPClient
     import Foundation
+    import NIO
 
     extension Request {
-        func asHTTPClientRequest(with environment: Environment) throws -> AsyncHTTPClient.HTTPClient.Request {
+        func asHTTPClientRequest(with environment: Environment) throws -> AsyncHTTPClient.HTTPClientRequest {
             let baseURL = environment.baseURL.trimmingSlashes()
             let path = self.path.trimmingSlashes()
 
@@ -23,7 +24,8 @@
                 url = urlComponents.string ?? url
             }
 
-            var clientRequest = try AsyncHTTPClient.HTTPClient.Request(url: url, method: .init(rawValue: self.method.rawValue))
+            var clientRequest = AsyncHTTPClient.HTTPClientRequest(url: url)
+            clientRequest.method = .init(rawValue: self.method.rawValue)
 
             // Merge HTTP headers together, preferring any overridden headers on the request.
             let headers = environment.headers.merging(self.headers, uniquingKeysWith: { _, header in header })
@@ -46,13 +48,13 @@
             switch contentType {
             case .json:
                 let data = try parameters.asJSONSerializedData()
-                clientRequest.body = .data(data)
+                clientRequest.body = .bytes(.init(data: data))
             case .wwwFormURLEncoded:
                 var urlComponents = URLComponents()
                 urlComponents.setQueryItems(with: parameters)
 
                 if let data = urlComponents.percentEncodedQuery?.data(using: .utf8) {
-                    clientRequest.body = .data(data)
+                    clientRequest.body = .bytes(.init(data: data))
                 } else {
                     // TODO: Throw Error
                 }

@@ -7,18 +7,18 @@
     import UtilityBeltNetworking
 
     public final class FoundationNetworkRequestDispatcher {
-        let client: UtilityBeltNetworking.HTTPClient
-        let environment: Environment
-        let decoder: JSONDecoder = .safeISO8601
+        public let client: UtilityBeltNetworking.HTTPClient
+        public let environment: Environment
+        public let decoder: JSONDecoder = .safeISO8601
 
-        init(environment: Environment) {
+        public init(environment: Environment) {
             self.environment = environment
             self.client = Self.configuredClient()
         }
     }
 
     extension FoundationNetworkRequestDispatcher: NetworkRequestDispatching {
-        func request<T: ResponseAnticipating>(_ request: T) async throws -> T.Response {
+        public func request<T: ResponseAnticipating>(_ request: T) async throws -> T.Response {
             let urlRequest = try request.asURLRequest(with: self.environment)
 
             let (data, _) = try await URLSession.shared.data(for: urlRequest)
@@ -29,29 +29,30 @@
             return try self.decoder.decode(T.Response.self, from: data)
         }
 
-        static func configuredClient() -> UtilityBeltNetworking.HTTPClient {
+        public static func configuredClient() -> UtilityBeltNetworking.HTTPClient {
             .init()
         }
     }
 
 #endif
 
-#if canImport(Combine)
-
-    public extension FoundationNetworkRequestDispatcher {
-        func request<T: ResponseAnticipating>(_ request: T) -> AnyPublisher<T.Response, Error> {
-            let urlRequest: URLRequest
-
-            do {
-                urlRequest = try request.asURLRequest(with: self.environment)
-            } catch {
-                return Result<T.Response, Error>.Publisher(error)
-                    .eraseToAnyPublisher()
-            }
-
-            return self.client
-                .requestPublisher(urlRequest, decoder: self.decoder)
-        }
-    }
-
-#endif
+// #if canImport(Combine)
+//
+//    // TODO: Implement more generic support: https://swiftbysundell.com/articles/creating-combine-compatible-versions-of-async-await-apis/
+//    public extension FoundationNetworkRequestDispatcher {
+//        func request<T: ResponseAnticipating>(_ request: T) -> AnyPublisher<T.Response, Error> {
+//            let urlRequest: URLRequest
+//
+//            do {
+//                urlRequest = try request.asURLRequest(with: self.environment)
+//            } catch {
+//                return Result<T.Response, Error>.Publisher(error)
+//                    .eraseToAnyPublisher()
+//            }
+//
+//            return self.client
+//                .requestPublisher(urlRequest, decoder: self.decoder)
+//        }
+//    }
+//
+// #endif

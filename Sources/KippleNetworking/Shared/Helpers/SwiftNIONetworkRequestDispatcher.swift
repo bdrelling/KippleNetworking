@@ -8,53 +8,51 @@
     import NIOHTTP1
 
     public final class SwiftNIONetworkRequestDispatcher {
-        enum RequestError: Error {
+        public enum RequestError: Error {
             case missingResponseBody
             case invalidRootJSONResponseKey
         }
 
-        let client: AsyncHTTPClient.HTTPClient
-        let environment: Environment
-        let decoder: JSONDecoder = .safeISO8601
+        public let client: AsyncHTTPClient.HTTPClient
+        public let environment: Environment
+        public let decoder: JSONDecoder = .safeISO8601
 
-        init(environment: Environment) {
+        public init(environment: Environment) {
             self.environment = environment
             self.client = Self.configuredClient()
+        }
+
+        deinit {
+            self.client.shutdown { error in
+                if let error = error {
+                    // TODO: Inject error logger and handle error?
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
 
     extension SwiftNIONetworkRequestDispatcher: NetworkRequestDispatching {
-        func request<T: ResponseAnticipating>(_ request: T) async throws -> T.Response {
-            #warning("Implement me!")
-            throw RequestError.missingResponseBody
-        }
+        public func request<T: ResponseAnticipating>(_ request: T) async throws -> T.Response {
+            let response = try await self.client.execute(request, with: self.environment, timeout: .seconds(10))
 
-        // TODO: Async! https://github.com/swift-server/async-http-client/blob/main/Examples/GetJSON/GetJSON.swift
-        func request<T: ResponseAnticipating>(_ request: T) -> EventLoopFuture<T.Response> {
-            self.client
-                .execute(request: request, with: self.environment)
-                .flatMapThrowing { response in
-                    if let buffer = response.body {
-                        let data = Data(buffer: buffer)
+            let buffer = try await response.body.collect(upTo: 1024 * 1024) // 1 MB
+            let data = Data(buffer: buffer)
 
-                        if let rootKey = self.environment.rootResponseKey {
-                            let responseDictionary = try self.decoder.decode([String: T.Response].self, from: data)
+            if let rootKey = self.environment.rootResponseKey {
+                let responseDictionary = try self.decoder.decode([String: T.Response].self, from: data)
 
-                            if let response = responseDictionary[rootKey] {
-                                return response
-                            } else {
-                                throw RequestError.invalidRootJSONResponseKey
-                            }
-                        } else {
-                            return try self.decoder.decode(T.Response.self, from: data)
-                        }
-                    } else {
-                        throw RequestError.missingResponseBody
-                    }
+                if let response = responseDictionary[rootKey] {
+                    return response
+                } else {
+                    throw RequestError.invalidRootJSONResponseKey
                 }
+            } else {
+                return try self.decoder.decode(T.Response.self, from: data)
+            }
         }
 
-        static func configuredClient() -> AsyncHTTPClient.HTTPClient {
+        public static func configuredClient() -> AsyncHTTPClient.HTTPClient {
             .init(eventLoopGroupProvider: .createNew)
         }
     }

@@ -2,7 +2,7 @@
 
 import Foundation
 
-protocol NetworkRequestDispatching {
+public protocol NetworkRequestDispatching {
     associatedtype HTTPClient
 
     var client: HTTPClient { get }
@@ -18,7 +18,7 @@ protocol NetworkRequestDispatching {
 
 // MARK: - Extensions
 
-extension NetworkRequestDispatching {
+public extension NetworkRequestDispatching {
     init(baseURL: String) {
         self.init(environment: .init(baseURL: baseURL))
     }

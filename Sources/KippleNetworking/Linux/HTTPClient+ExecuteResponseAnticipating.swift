@@ -8,13 +8,9 @@
     import NIOHTTP1
 
     extension HTTPClient {
-        func execute<T: ResponseAnticipating>(request: T, with environment: Environment) -> EventLoopFuture<Response> {
-            do {
-                let clientRequest = try request.asHTTPClientRequest(with: environment)
-                return self.execute(request: clientRequest)
-            } catch {
-                return self.eventLoopGroup.next().makeFailedFuture(error)
-            }
+        func execute<T: ResponseAnticipating>(_ request: T, with environment: Environment, timeout: TimeAmount = .seconds(10)) async throws -> HTTPClientResponse {
+            let clientRequest = try request.asHTTPClientRequest(with: environment)
+            return try await self.execute(clientRequest, timeout: timeout)
         }
     }
 
