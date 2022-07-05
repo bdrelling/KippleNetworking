@@ -1,6 +1,6 @@
 // Copyright © 2022 Brian Drelling. All rights reserved.
 
-#if os(Linux)
+#if canImport(AsyncHTTPClient)
 
     import AsyncHTTPClient
     import Foundation

@@ -4,16 +4,35 @@
 import XCTest
 
 final class KippleNetworkingTests: XCTestCase {
-    func testRequestSucceeds() async throws {
-        let networkDispatcher = NetworkRequestDispatcher(baseURL: "https://jsonplaceholder.typicode.com")
-        let request = GetExamplePostsRequest(id: 1)
-        let response = try await networkDispatcher.request(request)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 
-        XCTAssertEqual(response.id, 1)
-        XCTAssertEqual(response.userId, 1)
-        XCTAssertEqual(response.title, "sunt aut facere repellat provident occaecati excepturi optio reprehenderit")
-        XCTAssertEqual(response.body, "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto")
-    }
+        func testFoundationRequestSucceeds() async throws {
+            let networkDispatcher = FoundationNetworkRequestDispatcher(baseURL: "https://jsonplaceholder.typicode.com")
+            let request = GetExamplePostsRequest(id: 1)
+            let response = try await networkDispatcher.request(request)
+
+            XCTAssertEqual(response.id, 1)
+            XCTAssertEqual(response.userId, 1)
+            XCTAssertEqual(response.title, "sunt aut facere repellat provident occaecati excepturi optio reprehenderit")
+            XCTAssertEqual(response.body, "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto")
+        }
+
+    #endif
+
+    #if canImport(AsyncHTTPClient)
+
+        func testSwiftNIORequestSucceeds() async throws {
+            let networkDispatcher = SwiftNIONetworkRequestDispatcher(baseURL: "https://jsonplaceholder.typicode.com")
+            let request = GetExamplePostsRequest(id: 1)
+            let response = try await networkDispatcher.request(request)
+
+            XCTAssertEqual(response.id, 1)
+            XCTAssertEqual(response.userId, 1)
+            XCTAssertEqual(response.title, "sunt aut facere repellat provident occaecati excepturi optio reprehenderit")
+            XCTAssertEqual(response.body, "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto")
+        }
+
+    #endif
 }
 
 // TODO: Use Xkcd service? https://github.com/swift-server/async-http-client/blob/main/Examples/GetJSON/GetJSON.swift

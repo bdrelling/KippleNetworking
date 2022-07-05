@@ -1,12 +1,12 @@
 // Copyright © 2022 Brian Drelling. All rights reserved.
 
-#if os(Linux)
+#if canImport(AsyncHTTPClient)
 
     import AsyncHTTPClient
     import Foundation
 
     extension Request {
-        func asHTTPClientRequest(with environment: ServiceCore.Environment) throws -> HTTPClient.Request {
+        func asHTTPClientRequest(with environment: Environment) throws -> AsyncHTTPClient.HTTPClient.Request {
             let baseURL = environment.baseURL.trimmingSlashes()
             let path = self.path.trimmingSlashes()
 
@@ -23,7 +23,7 @@
                 url = urlComponents.string ?? url
             }
 
-            var clientRequest = try HTTPClient.Request(url: url, method: self.method)
+            var clientRequest = try AsyncHTTPClient.HTTPClient.Request(url: url, method: .init(rawValue: self.method.rawValue))
 
             // Merge HTTP headers together, preferring any overridden headers on the request.
             let headers = environment.headers.merging(self.headers, uniquingKeysWith: { _, header in header })
