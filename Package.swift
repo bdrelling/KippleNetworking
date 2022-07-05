@@ -20,7 +20,18 @@ let package = Package(
     targets: [
         .target(
             name: "KippleNetworking",
-            dependencies: []
+            dependencies: [
+                .product(
+                    name: "AsyncHTTPClient",
+                    package: "async-http-client",
+                    condition: .when(platforms: [.linux])
+                ),
+                .product(
+                    name: "UtilityBeltNetworking",
+                    package: "UtilityBelt-iOS",
+                    condition: .when(platforms: [.iOS, .macOS, .tvOS, .watchOS])
+                ),
+            ]
         ),
         .testTarget(
             name: "KippleNetworkingTests",

@@ -48,3 +48,7 @@ fastlane/[Pp]review.html
 
 ## Dotenv
 .env.local
+
+## Build / Deploy Directorsy
+build/
+deploy/
