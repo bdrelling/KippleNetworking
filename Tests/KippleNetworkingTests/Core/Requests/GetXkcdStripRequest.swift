@@ -3,13 +3,15 @@
 import KippleNetworking
 
 // TODO: Use Xkcd service? https://github.com/swift-server/async-http-client/blob/main/Examples/GetJSON/GetJSON.swift
-public struct GetPostsRequest: Request, ResponseAnticipating {
+public struct GetXkcdStripRequest: Request, ResponseAnticipating {
+    public typealias Response = XkcdStrip
+
     private enum Parameters: String {
         case id
     }
 
     public var path: String {
-        "/posts/\(self.id)"
+        "/\(self.id)/info.0.json"
     }
 
     public private(set) var parameters: [String: Any] = [:]
@@ -17,14 +19,6 @@ public struct GetPostsRequest: Request, ResponseAnticipating {
     private let id: Int
 
     public init(id: Int) {
-        self.parameters[Parameters.id.rawValue] = id
         self.id = id
-    }
-
-    public struct Response: Decodable {
-        public let userId: Int
-        public let id: Int
-        public let title: String
-        public let body: String
     }
 }
