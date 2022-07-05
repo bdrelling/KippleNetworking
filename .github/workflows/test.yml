@@ -8,8 +8,19 @@ on:
 
 env:
   DEPLOY_DIRECTORY: deploy
+  LC_ALL: en_US.UTF-8
+  LANG: en_US.UTF-8
 
 jobs:
+  prepare:
+    name: Prepare
+    # Available Runners: https://github.com/actions/virtual-environments
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
   # lint:
   #   name: Lint
   #   runs-on: macos-11
@@ -28,17 +39,15 @@ jobs:
   #       run: sh ./scripts/danger_lint.sh
   spm:
     name: SPM (${{ matrix.os }})
+    # Available Runners: https://github.com/actions/virtual-environments
     runs-on: ${{ matrix.os }}
-    # needs: [lint]
+    needs: [prepare]
     strategy:
       matrix:
-        os: [macos-12]
-        xcode_version: ['13.4']
+        os: [macos-12, ubuntu-22.04]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # - name: Switch Xcode Version
-      #   run: sudo xcode-select -switch "/Applications/Xcode_${{ matrix.xcode_version }}.app"
       - name: Run Tests
         run: sh ./scripts/swift_build.sh
       - name: Upload Step Output
