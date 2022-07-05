@@ -52,7 +52,7 @@ jobs:
       - name: Upload Step Output
         uses: actions/upload-artifact@v1
         with:
-          name: SPM Output
+          name: Output (Linux)
           path: ${{ env.DEPLOY_DIRECTORY }}
   swift_test_macos:
     name: swift test (macOS)
@@ -67,5 +67,5 @@ jobs:
       - name: Upload Step Output
         uses: actions/upload-artifact@v1
         with:
-          name: SPM Output
+          name: Output (macOS)
           path: ${{ env.DEPLOY_DIRECTORY }}
