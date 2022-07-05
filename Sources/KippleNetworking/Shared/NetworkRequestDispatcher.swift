@@ -11,7 +11,7 @@ import Foundation
 
 #elseif os(Linux)
 
-    import AysncHTTPClient
+    import AsyncHTTPClient
     import NIO
     import NIOHTTP1
 
@@ -28,7 +28,7 @@ public class NetworkRequestDispatcher {
         self.environment = environment
         self.client = Self.configuredClient()
     }
-    
+
     public convenience init(baseURL: String) {
         self.init(environment: .init(baseURL: baseURL))
     }
@@ -77,6 +77,7 @@ public class NetworkRequestDispatcher {
             case invalidRootJSONResponseKey
         }
 
+        // TODO: Async! https://github.com/swift-server/async-http-client/blob/main/Examples/GetJSON/GetJSON.swift
         func request<T: ResponseAnticipating>(_ request: T) -> EventLoopFuture<T.Response> {
             self.client
                 .execute(request: request, with: self.environment)

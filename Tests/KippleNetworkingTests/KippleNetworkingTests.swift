@@ -8,7 +8,7 @@ final class KippleNetworkingTests: XCTestCase {
         let networkDispatcher = NetworkRequestDispatcher(baseURL: "https://jsonplaceholder.typicode.com")
         let request = GetExamplePostsRequest(id: 1)
         let response = try await networkDispatcher.request(request)
-        
+
         XCTAssertEqual(response.id, 1)
         XCTAssertEqual(response.userId, 1)
         XCTAssertEqual(response.title, "sunt aut facere repellat provident occaecati excepturi optio reprehenderit")
@@ -16,24 +16,25 @@ final class KippleNetworkingTests: XCTestCase {
     }
 }
 
+// TODO: Use Xkcd service? https://github.com/swift-server/async-http-client/blob/main/Examples/GetJSON/GetJSON.swift
 public struct GetExamplePostsRequest: Request, ResponseAnticipating {
     private enum Parameters: String {
-        case id = "id"
+        case id
     }
 
     public var path: String {
-        "/posts/\(id)"
+        "/posts/\(self.id)"
     }
 
     public private(set) var parameters: [String: Any] = [:]
-    
+
     private let id: Int
 
     public init(id: Int) {
         self.parameters[Parameters.id.rawValue] = id
         self.id = id
     }
-    
+
     public struct Response: Decodable {
         public let userId: Int
         public let id: Int
@@ -41,8 +42,3 @@ public struct GetExamplePostsRequest: Request, ResponseAnticipating {
         public let body: String
     }
 }
-
-
-
-
-

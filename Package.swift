@@ -14,7 +14,7 @@ let package = Package(
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-server/async-http-client", .upToNextMajor(from: "1.3.0")),
+        .package(url: "https://github.com/swift-server/async-http-client", .upToNextMajor(from: "1.11.1")),
         .package(url: "https://github.com/spothero/UtilityBelt-iOS", .upToNextMinor(from: "0.13.0")),
     ],
     targets: [
@@ -23,8 +23,8 @@ let package = Package(
             dependencies: [
                 .product(
                     name: "AsyncHTTPClient",
-                    package: "async-http-client",
-                    condition: .when(platforms: [.linux])
+                    package: "async-http-client"//,
+//                    condition: .when(platforms: [.linux])
                 ),
                 .product(
                     name: "UtilityBeltNetworking",
