@@ -9,7 +9,7 @@
         func testRequestSucceeds() async throws {
             let networkDispatcher = FoundationNetworkRequestDispatcher(baseURL: "https://xkcd.com")
             let request = GetXkcdStripRequest(id: XkcdStrip.exploitsOfAMom.num)
-            let response = try await networkDispatcher.request(request)
+            let response: XkcdStrip = try await networkDispatcher.request(request).result
 
             XCTAssertEqual(response, .exploitsOfAMom)
         }
