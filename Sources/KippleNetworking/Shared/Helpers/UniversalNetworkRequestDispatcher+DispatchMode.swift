@@ -16,7 +16,7 @@ public extension UniversalNetworkRequestDispatcher {
             case swiftNIO(AsyncHTTPClient.HTTPClient? = nil)
         #endif
 
-        func configured(for environment: Environment, decoder: JSONDecoder? = nil) -> NetworkRequestDispatching {
+        public func configured(for environment: Environment, decoder: JSONDecoder? = nil) -> NetworkRequestDispatching {
             switch self {
             #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
                 case let .appleFoundation(session):
@@ -33,13 +33,13 @@ public extension UniversalNetworkRequestDispatcher {
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    extension UniversalNetworkRequestDispatcher.DispatchMode {
+    public extension UniversalNetworkRequestDispatcher.DispatchMode {
         static let automatic: Self = .appleFoundation(.shared)
     }
 
 #elseif canImport(AsyncHTTPClient)
 
-    extension UniversalNetworkRequestDispatcher.DispatchMode {
+    public extension UniversalNetworkRequestDispatcher.DispatchMode {
         static let automatic: Self = .swiftNIO(.init(eventLoopGroupProvider: .createNew))
     }
 
