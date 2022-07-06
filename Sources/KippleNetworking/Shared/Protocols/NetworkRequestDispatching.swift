@@ -17,8 +17,9 @@ public extension NetworkRequestDispatching {
         return try response.decoded(to: T.self, with: self.decoder, rootResponseKey: self.environment.rootResponseKey)
     }
 
-    func request<T>(for request: T) async throws -> DataResponse<T.Response> where T: ResponseAnticipating {
-        try await self.request(request)
+    // FIXME: How can this method match the same signature as other `request` methods without losing type safety or causing an infinite loop?
+    func response<T>(for request: T) async throws -> T.Response where T: ResponseAnticipating {
+        try await self.request(request).result
     }
 }
 
