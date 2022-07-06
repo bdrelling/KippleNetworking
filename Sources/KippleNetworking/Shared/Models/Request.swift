@@ -60,6 +60,17 @@ public struct HTTPRequest: Request {
     }
 }
 
+/// A convenience request that decodes the response of a GET request with no parameters or headers.
+public struct DecodableRequest<T: Decodable>: Request, ResponseAnticipating {
+    public typealias Response = T
+
+    public let path: String
+
+    public init(_ path: String, response: T.Type) {
+        self.path = path
+    }
+}
+
 public protocol ResponseAnticipating: Request {
     associatedtype Response: Decodable
 }
