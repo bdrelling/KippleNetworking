@@ -1,6 +1,6 @@
 # KippleNetworking
 
-[![CI Status](https://github.com/bdrelling/KippleNetworking/actions/workflows/test.yml/badge.svg)](https://github.com/bdrelling/KippleNetworking/actions/workflows/tests.yml)
+[![CI Status](https://github.com/bdrelling/KippleNetworking/actions/workflows/tests.yml/badge.svg)](https://github.com/bdrelling/KippleNetworking/actions/workflows/tests.yml)
 [![Latest Release](https://img.shields.io/github/v/tag/bdrelling/KippleNetworking?color=blue&label=latest)](https://github.com/bdrelling/KippleNetworking/releases)
 [![Swift Version](https://img.shields.io/static/v1?label=swift&message=5.6&color=red&logo=swift&logoColor=white)](https://developer.apple.com/swift)
 [![Platform Support](https://img.shields.io/static/v1?label=platform&message=iOS%20|%20macOS%20|%20watchOS%20|%20tvOS%20|%20Linux&color=darkgray)](https://github.com/bdrelling/KippleNetworking/blob/main/Package.swift)
