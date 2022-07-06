@@ -10,13 +10,13 @@ public final class UniversalNetworkRequestDispatcher {
 
     private let dispatcher: NetworkRequestDispatching
 
-    init(environment: Environment, decoder: JSONDecoder = .safeISO8601, dispatchMode: DispatchMode = .automatic) {
+    public init(environment: Environment, decoder: JSONDecoder = .safeISO8601, dispatchMode: DispatchMode = .automatic) {
         self.environment = environment
         self.decoder = decoder
         self.dispatcher = dispatchMode.configured(for: environment, decoder: decoder)
     }
 
-    convenience init(baseURL: String, decoder: JSONDecoder = .safeISO8601, dispatchMode: DispatchMode = .automatic) {
+    public convenience init(baseURL: String, decoder: JSONDecoder = .safeISO8601, dispatchMode: DispatchMode = .automatic) {
         self.init(environment: .init(baseURL: baseURL), decoder: decoder, dispatchMode: dispatchMode)
     }
 }
