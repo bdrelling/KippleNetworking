@@ -18,6 +18,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio", .upToNextMajor(from: "2.40.0")),
         .package(url: "https://github.com/apple/swift-nio-extras", .upToNextMajor(from: "1.12.1")),
         .package(url: "https://github.com/swift-server/async-http-client", .upToNextMajor(from: "1.11.1")),
+        // Development
+        .package(url: "https://github.com/swift-kipple/Plugins", from: "0.2.0"),
     ],
     targets: [
         // Product Targets
