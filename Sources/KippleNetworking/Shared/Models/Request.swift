@@ -9,6 +9,7 @@ public protocol Request {
     var parameters: [String: Any] { get }
     var headers: [String: String] { get }
     var encoding: ParameterEncoding { get }
+    var rootResponseKey: String? { get }
 }
 
 public extension Request {
@@ -30,6 +31,10 @@ public extension Request {
 
     var encoding: ParameterEncoding {
         .defaultEncoding(for: self.method)
+    }
+    
+    var rootResponseKey: String? {
+        nil
     }
 }
 

@@ -8,19 +8,13 @@
     import NIOHTTP1
 
     public final class NIONetworkRequestDispatcher {
-        public let environment: Environment
         public let decoder: JSONDecoder
 
         private let client: AsyncHTTPClient.HTTPClient
 
-        public init(environment: Environment, decoder: JSONDecoder? = nil, client: AsyncHTTPClient.HTTPClient? = nil) {
-            self.environment = environment
+        public init(decoder: JSONDecoder? = nil, client: AsyncHTTPClient.HTTPClient? = nil) {
             self.decoder = decoder ?? .safeISO8601
             self.client = client ?? .init(eventLoopGroupProvider: .createNew)
-        }
-
-        public convenience init(baseURL: String, decoder: JSONDecoder? = nil, client: AsyncHTTPClient.HTTPClient? = nil) {
-            self.init(environment: .init(baseURL: baseURL), decoder: decoder, client: client)
         }
 
         deinit {
@@ -47,9 +41,9 @@
     }
 
     extension NIONetworkRequestDispatcher: NetworkRequestDispatching {
-        public func request(_ request: Request) async throws -> DataResponse<Data> {
-            let httpClientRequest = try request.asHTTPClientRequest(with: self.environment)
-            let (data, response) = try await self.request(httpClientRequest, timeout: .seconds(Int64(self.environment.timeout ?? 10)))
+        public func request(_ request: Request, with environment: Environment) async throws -> DataResponse<Data> {
+            let httpClientRequest = try request.asHTTPClientRequest(with: environment)
+            let (data, response) = try await self.request(httpClientRequest, timeout: .seconds(Int64(environment.timeout ?? 10)))
 
             return try .init(request: request, response: response, data: data)
         }

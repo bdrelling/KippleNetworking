@@ -7,11 +7,12 @@
 
     final class NIONetworkRequestDispatcherTests: XCTestCase {
         func testRequestSucceeds() async throws {
-            let networkDispatcher = NIONetworkRequestDispatcher(baseURL: "https://xkcd.com")
+            let environment = Environment(baseURL: "https://xkcd.com")
+            let dispatcher = NIONetworkRequestDispatcher()
             let request = GetXkcdStripRequest(id: XkcdStrip.exploitsOfAMom.num)
 
             do {
-                let response: XkcdStrip = try await networkDispatcher.request(for: request).result
+                let response: XkcdStrip = try await dispatcher.response(for: request, with: environment)
                 XCTAssertEqual(response, .exploitsOfAMom)
             } catch {
                 print(error.localizedDescription)
@@ -19,18 +20,19 @@
         }
 
         func testRepeatedRequestsSucceed() async throws {
-            let networkDispatcher = NIONetworkRequestDispatcher(baseURL: "https://xkcd.com")
+            let environment = Environment(baseURL: "https://xkcd.com")
+            let dispatcher = NIONetworkRequestDispatcher()
             let request = GetXkcdStripRequest(id: XkcdStrip.exploitsOfAMom.num)
 
             do {
-                let response: XkcdStrip = try await networkDispatcher.request(for: request).result
+                let response: XkcdStrip = try await dispatcher.response(for: request, with: environment)
                 XCTAssertEqual(response, .exploitsOfAMom)
             } catch {
                 print(error.localizedDescription)
             }
 
             do {
-                let response: XkcdStrip = try await networkDispatcher.request(for: request).result
+                let response: XkcdStrip = try await dispatcher.response(for: request, with: environment)
                 XCTAssertEqual(response, .exploitsOfAMom)
             } catch {
                 print(error.localizedDescription)

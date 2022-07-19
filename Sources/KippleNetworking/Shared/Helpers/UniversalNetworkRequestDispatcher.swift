@@ -2,35 +2,33 @@
 
 import Foundation
 
-public typealias HTTPClient = UniversalNetworkRequestDispatcher
-
 public final class UniversalNetworkRequestDispatcher {
-    public let environment: Environment
     public let decoder: JSONDecoder
 
     private let dispatcher: NetworkRequestDispatching
 
-    public init(environment: Environment, decoder: JSONDecoder? = nil, dispatchMode: DispatchMode = .automatic) {
-        self.environment = environment
+    public init(decoder: JSONDecoder? = nil, dispatchMode: DispatchMode = .automatic) {
         self.decoder = decoder ?? .safeISO8601
-        self.dispatcher = dispatchMode.configured(for: environment, decoder: decoder)
-    }
-
-    public convenience init(baseURL: String, decoder: JSONDecoder? = nil, dispatchMode: DispatchMode = .automatic) {
-        self.init(environment: .init(baseURL: baseURL), decoder: decoder, dispatchMode: dispatchMode)
+        self.dispatcher = dispatchMode.configured(decoder: decoder)
     }
 }
 
 extension UniversalNetworkRequestDispatcher: NetworkRequestDispatching {
-    public func request(for request: Request) async throws -> DataResponse<Data> {
-        try await self.dispatcher.request(request)
+    public func request(_ request: Request, with environment: Environment) async throws -> DataResponse<Data> {
+        try await self.dispatcher.request(request, with: environment)
     }
 
-    public func request<T>(for request: Request) async throws -> DataResponse<T> where T: Decodable {
-        try await self.dispatcher.request(request)
+    public func requestDecoded<T>(_ request: Request, with environment: Environment) async throws -> DataResponse<T> where T: Decodable {
+        try await self.dispatcher.requestDecoded(request, with: environment)
     }
 
-    public func request<T>(for request: T) async throws -> DataResponse<T.Response> where T: ResponseAnticipating {
-        try await self.dispatcher.request(request)
+    public func response<T>(for request: T, with environment: Environment) async throws -> T.Response where T: ResponseAnticipating {
+        try await self.dispatcher.response(for: request, with: environment)
+    }
+}
+
+extension NetworkRequestDispatching where Self == UniversalNetworkRequestDispatcher {
+    public static var universal: Self {
+        Self.init()
     }
 }

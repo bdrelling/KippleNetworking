@@ -7,9 +7,11 @@
 
     final class FoundationNetworkRequestDispatcherTests: XCTestCase {
         func testRequestSucceeds() async throws {
-            let networkDispatcher = FoundationNetworkRequestDispatcher(baseURL: "https://xkcd.com")
+            let environment = Environment(baseURL: "https://xkcd.com")
+            let dispatcher = FoundationNetworkRequestDispatcher()
             let request = GetXkcdStripRequest(id: XkcdStrip.exploitsOfAMom.num)
-            let response: XkcdStrip = try await networkDispatcher.request(request).result
+            
+            let response: XkcdStrip = try await dispatcher.response(for: request, with: environment)
 
             XCTAssertEqual(response, .exploitsOfAMom)
         }

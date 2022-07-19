@@ -5,19 +5,13 @@
     import Foundation
 
     public final class FoundationNetworkRequestDispatcher {
-        public let environment: Environment
         public let decoder: JSONDecoder
 
         private let session: URLSession
 
-        public init(environment: Environment, decoder: JSONDecoder? = nil, session: URLSession = .shared) {
-            self.environment = environment
+        public init(decoder: JSONDecoder? = nil, session: URLSession = .shared) {
             self.decoder = decoder ?? .safeISO8601
             self.session = session
-        }
-
-        public convenience init(baseURL: String, decoder: JSONDecoder? = nil, session: URLSession = .shared) {
-            self.init(environment: .init(baseURL: baseURL), decoder: decoder, session: session)
         }
     }
 
@@ -30,11 +24,17 @@
     }
 
     extension FoundationNetworkRequestDispatcher: NetworkRequestDispatching {
-        public func request(_ request: Request) async throws -> DataResponse<Data> {
-            let urlRequest = try request.asURLRequest(with: self.environment)
+        public func request(_ request: Request, with environment: Environment) async throws -> DataResponse<Data> {
+            let urlRequest = try request.asURLRequest(with: environment)
             let (data, response) = try await self.request(urlRequest)
 
             return try .init(request: request, response: response, data: data)
+        }
+    }
+
+    extension NetworkRequestDispatching where Self == FoundationNetworkRequestDispatcher {
+        public static var foundation: Self {
+            Self.init()
         }
     }
 
