@@ -3,8 +3,6 @@
 import Foundation
 
 public protocol NetworkRequestDispatching {
-    #warning("Re-add default environment?")
-//    var environment: Environment { get }
     var decoder: JSONDecoder { get }
 
     func request(_ request: Request, with environment: Environment) async throws -> DataResponse<Data>
