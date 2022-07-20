@@ -3,8 +3,8 @@
 import Foundation
 
 public final class HTTPClient {
-    private let environment: Environment
-    private let dispatcher: NetworkRequestDispatching
+    public let environment: Environment
+    public let dispatcher: NetworkRequestDispatching
 
     public init(environment: Environment, dispatcher: NetworkRequestDispatching = .universal) {
         self.environment = environment

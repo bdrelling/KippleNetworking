@@ -6,7 +6,7 @@ public extension JSONDecoder {
         do {
             return try self.decode(type, from: data)
         } catch let error as DecodingError {
-            throw NetworkingError.unableToDecode(String(describing: type), error)
+            throw NetworkingError.unableToDecode(String(reflecting: type), error)
         } catch {
             throw error
         }
