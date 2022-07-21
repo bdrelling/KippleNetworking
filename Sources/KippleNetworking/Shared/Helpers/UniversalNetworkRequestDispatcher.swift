@@ -27,8 +27,8 @@ extension UniversalNetworkRequestDispatcher: NetworkRequestDispatching {
     }
 }
 
-extension NetworkRequestDispatching where Self == UniversalNetworkRequestDispatcher {
-    public static var universal: Self {
-        Self.init()
+public extension NetworkRequestDispatching where Self == UniversalNetworkRequestDispatcher {
+    static var universal: Self {
+        Self()
     }
 }

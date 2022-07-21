@@ -10,7 +10,7 @@ public final class HTTPClient {
         self.environment = environment
         self.dispatcher = dispatcher
     }
-    
+
     public func request(_ request: Request, with environment: Environment? = nil) async throws -> DataResponse<Data> {
         try await self.dispatcher.request(request, with: environment ?? self.environment)
     }

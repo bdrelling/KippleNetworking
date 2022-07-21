@@ -38,9 +38,9 @@ extension DataResponse where Result == Data {
                 let result = try decoder.decodeCleaned(decodableType, from: self.data)
                 return self.replacing(result: result)
             }
-            
+
             let responseDictionary = try decoder.decodeCleaned([String: T].self, from: data)
-            
+
             if let response = responseDictionary[rootKey] {
                 return self.replacing(result: response)
             } else {

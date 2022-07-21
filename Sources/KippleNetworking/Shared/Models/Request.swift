@@ -32,7 +32,7 @@ public extension Request {
     var encoding: ParameterEncoding {
         .defaultEncoding(for: self.method)
     }
-    
+
     var rootResponseKey: String? {
         nil
     }

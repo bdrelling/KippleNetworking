@@ -3,7 +3,7 @@
 import Foundation
 
 #if canImport(AsyncHTTPClient)
-    import AsyncHTTPClient
+import AsyncHTTPClient
 #endif
 
 /// The response that is returned by the server from an HTTP request.
@@ -57,40 +57,40 @@ public extension DataResponse where Result == Data {
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 
-    extension DataResponse {
-        init(request: Request, response: URLResponse, data: Data, result: Result) throws {
-            if let status = (response as? HTTPURLResponse)?.status {
-                self.init(request: request, status: status, data: data, result: result)
-            } else {
-                fatalError()
-            }
+extension DataResponse {
+    init(request: Request, response: URLResponse, data: Data, result: Result) throws {
+        if let status = (response as? HTTPURLResponse)?.status {
+            self.init(request: request, status: status, data: data, result: result)
+        } else {
+            fatalError()
         }
     }
+}
 
-    extension DataResponse where Result == Data {
-        init(request: Request, response: URLResponse, data: Data) throws {
-            try self.init(request: request, response: response, data: data, result: data)
-        }
+extension DataResponse where Result == Data {
+    init(request: Request, response: URLResponse, data: Data) throws {
+        try self.init(request: request, response: response, data: data, result: data)
     }
+}
 
 #endif
 
 #if canImport(AsyncHTTPClient)
 
-    extension DataResponse {
-        init(request: Request, response: HTTPClientResponse, data: Data, result: Result) throws {
-            if let status = HTTPStatusCode(rawValue: Int(response.status.code)) {
-                self.init(request: request, status: status, data: data, result: result)
-            } else {
-                fatalError()
-            }
+extension DataResponse {
+    init(request: Request, response: HTTPClientResponse, data: Data, result: Result) throws {
+        if let status = HTTPStatusCode(rawValue: Int(response.status.code)) {
+            self.init(request: request, status: status, data: data, result: result)
+        } else {
+            fatalError()
         }
     }
+}
 
-    extension DataResponse where Result == Data {
-        init(request: Request, response: HTTPClientResponse, data: Data) throws {
-            try self.init(request: request, response: response, data: data, result: data)
-        }
+extension DataResponse where Result == Data {
+    init(request: Request, response: HTTPClientResponse, data: Data) throws {
+        try self.init(request: request, response: response, data: data, result: data)
     }
+}
 
 #endif

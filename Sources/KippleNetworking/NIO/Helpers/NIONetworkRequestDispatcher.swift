@@ -2,51 +2,51 @@
 
 #if canImport(AsyncHTTPClient)
 
-    import AsyncHTTPClient
-    import Foundation
-    import NIO
-    import NIOHTTP1
+import AsyncHTTPClient
+import Foundation
+import NIO
+import NIOHTTP1
 
-    public final class NIONetworkRequestDispatcher {
-        public let decoder: JSONDecoder
+public final class NIONetworkRequestDispatcher {
+    public let decoder: JSONDecoder
 
-        private let client: AsyncHTTPClient.HTTPClient
+    private let client: AsyncHTTPClient.HTTPClient
 
-        public init(decoder: JSONDecoder? = nil, client: AsyncHTTPClient.HTTPClient? = nil) {
-            self.decoder = decoder ?? .safeISO8601
-            self.client = client ?? .init(eventLoopGroupProvider: .createNew)
-        }
+    public init(decoder: JSONDecoder? = nil, client: AsyncHTTPClient.HTTPClient? = nil) {
+        self.decoder = decoder ?? .safeISO8601
+        self.client = client ?? .init(eventLoopGroupProvider: .createNew)
+    }
 
-        deinit {
-            self.client.shutdown { error in
-                if let error = error {
-                    // TODO: Inject error logger and handle error?
-                    print(error.localizedDescription)
-                }
+    deinit {
+        self.client.shutdown { error in
+            if let error = error {
+                // TODO: Inject error logger and handle error?
+                print(error.localizedDescription)
             }
         }
     }
+}
 
-    // MARK: - Extensions
+// MARK: - Extensions
 
-    private extension NIONetworkRequestDispatcher {
-        func request(_ httpClientRequest: HTTPClientRequest, timeout: TimeAmount = .seconds(10)) async throws -> (Data, HTTPClientResponse) {
-            let response = try await self.client.execute(httpClientRequest, timeout: timeout)
+private extension NIONetworkRequestDispatcher {
+    func request(_ httpClientRequest: HTTPClientRequest, timeout: TimeAmount = .seconds(10)) async throws -> (Data, HTTPClientResponse) {
+        let response = try await self.client.execute(httpClientRequest, timeout: timeout)
 
-            let buffer = try await response.body.collect(upTo: 1024 * 1024) // 1 MB
-            let data = Data(buffer: buffer)
+        let buffer = try await response.body.collect(upTo: 1024 * 1024) // 1 MB
+        let data = Data(buffer: buffer)
 
-            return (data, response)
-        }
+        return (data, response)
     }
+}
 
-    extension NIONetworkRequestDispatcher: NetworkRequestDispatching {
-        public func request(_ request: Request, with environment: Environment) async throws -> DataResponse<Data> {
-            let httpClientRequest = try request.asHTTPClientRequest(with: environment)
-            let (data, response) = try await self.request(httpClientRequest, timeout: .seconds(Int64(environment.timeout ?? 10)))
+extension NIONetworkRequestDispatcher: NetworkRequestDispatching {
+    public func request(_ request: Request, with environment: Environment) async throws -> DataResponse<Data> {
+        let httpClientRequest = try request.asHTTPClientRequest(with: environment)
+        let (data, response) = try await self.request(httpClientRequest, timeout: .seconds(Int64(environment.timeout ?? 10)))
 
-            return try .init(request: request, response: response, data: data)
-        }
+        return try .init(request: request, response: response, data: data)
     }
+}
 
 #endif
