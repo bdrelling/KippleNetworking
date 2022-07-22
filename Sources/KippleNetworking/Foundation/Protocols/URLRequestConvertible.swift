@@ -1,5 +1,7 @@
 // Copyright © 2022 Brian Drelling. All rights reserved.
 
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+
 import Foundation
 
 /// A convenience protocol for converting an object into a `URLRequest`.
@@ -29,3 +31,5 @@ extension String: URLRequestConvertible {
         }
     }
 }
+
+#endif

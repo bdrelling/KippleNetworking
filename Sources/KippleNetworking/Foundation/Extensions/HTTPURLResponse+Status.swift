@@ -1,5 +1,7 @@
 // Copyright © 2022 Brian Drelling. All rights reserved.
 
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+
 import Foundation
 
 public extension HTTPURLResponse {
@@ -14,3 +16,5 @@ public extension HTTPURLResponse {
         return status
     }
 }
+
+#endif

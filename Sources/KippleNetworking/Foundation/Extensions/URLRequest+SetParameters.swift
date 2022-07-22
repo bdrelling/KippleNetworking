@@ -1,5 +1,7 @@
 // Copyright © 2022 Brian Drelling. All rights reserved.
 
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+
 import Foundation
 
 extension URLRequest {
@@ -54,3 +56,5 @@ extension URLRequest {
         self.setParameters(parameters, encoding: encoding)
     }
 }
+
+#endif
