@@ -13,6 +13,8 @@ public final class UniversalNetworkRequestDispatcher {
     }
 }
 
+// MARK: - Extensions
+
 extension UniversalNetworkRequestDispatcher: NetworkRequestDispatching {
     public func request(_ request: Request, with environment: Environment) async throws -> DataResponse<Data> {
         try await self.dispatcher.request(request, with: environment)
@@ -27,8 +29,14 @@ extension UniversalNetworkRequestDispatcher: NetworkRequestDispatching {
     }
 }
 
+// MARK: - Convenience
+
 public extension NetworkRequestDispatching where Self == UniversalNetworkRequestDispatcher {
     static var universal: Self {
-        Self()
+        .init()
+    }
+
+    static func universal(decoder: JSONDecoder? = nil) -> Self {
+        .init(decoder: decoder)
     }
 }

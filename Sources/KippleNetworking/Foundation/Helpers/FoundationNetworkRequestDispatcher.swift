@@ -9,9 +9,9 @@ public final class FoundationNetworkRequestDispatcher {
 
     private let session: URLSession
 
-    public init(decoder: JSONDecoder? = nil, session: URLSession = .shared) {
+    public init(decoder: JSONDecoder? = nil, session: URLSession? = nil) {
         self.decoder = decoder ?? .safeISO8601
-        self.session = session
+        self.session = session ?? .shared
     }
 }
 
@@ -32,9 +32,15 @@ extension FoundationNetworkRequestDispatcher: NetworkRequestDispatching {
     }
 }
 
+// MARK: - Convenience
+
 public extension NetworkRequestDispatching where Self == FoundationNetworkRequestDispatcher {
     static var foundation: Self {
-        Self()
+        .init()
+    }
+
+    static func foundation(decoder: JSONDecoder? = nil, session: URLSession? = nil) -> Self {
+        .init(decoder: decoder, session: session)
     }
 }
 

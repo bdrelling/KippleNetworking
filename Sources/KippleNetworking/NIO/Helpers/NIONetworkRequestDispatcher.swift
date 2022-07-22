@@ -49,4 +49,16 @@ extension NIONetworkRequestDispatcher: NetworkRequestDispatching {
     }
 }
 
+// MARK: - Convenience
+
+public extension NetworkRequestDispatching where Self == NIONetworkRequestDispatcher {
+    static var nio: Self {
+        .init()
+    }
+
+    static func nio(decoder: JSONDecoder? = nil, client: AsyncHTTPClient.HTTPClient? = nil) -> Self {
+        .init(decoder: decoder, client: client)
+    }
+}
+
 #endif
