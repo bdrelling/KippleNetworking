@@ -1,10 +1,10 @@
 # KippleNetworking
 
 [![CI Status](https://github.com/bdrelling/KippleNetworking/actions/workflows/tests.yml/badge.svg)](https://github.com/bdrelling/KippleNetworking/actions/workflows/tests.yml)
-[![Latest Release](https://img.shields.io/github/v/tag/bdrelling/KippleNetworking?color=blue&label=latest)](https://github.com/bdrelling/KippleNetworking/releases)
-[![Swift Version](https://img.shields.io/static/v1?label=swift&message=5.6&color=red&logo=swift&logoColor=white)](https://developer.apple.com/swift)
-[![Platform Support](https://img.shields.io/static/v1?label=platform&message=iOS%20|%20macOS%20|%20watchOS%20|%20tvOS%20|%20Linux&color=darkgray)](https://github.com/bdrelling/KippleNetworking/blob/main/Package.swift)
-[![License](https://img.shields.io/github/license/bdrelling/KippleNetworking)](https://github.com/bdrelling/KippleNetworking/blob/main/LICENSE)
+[![Latest Release](https://img.shields.io/github/v/tag/swift-kipple/Networking?color=blue&label=latest)](https://github.com/swift-kipple/Networking/releases)
+[![Swift Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fswift-kipple%2FNetworking%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/swift-kipple/Networking)
+[![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fswift-kipple%2FNetworking%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/swift-kipple/Networking)
+[![License](https://img.shields.io/github/license/swift-kipple/Networking)](https://github.com/swift-kipple/Networking/blob/main/LICENSE)
 
 A Swift library that offers cross-platform (Apple and Linux) networking support, intended for the creation of cross-platform SDKs to be used in projects spanning across iOS/macOS/tvOS/watchOS and Server-side Swift.
 
