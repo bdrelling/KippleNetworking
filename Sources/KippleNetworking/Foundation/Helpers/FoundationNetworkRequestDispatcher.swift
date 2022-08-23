@@ -19,7 +19,21 @@ public final class FoundationNetworkRequestDispatcher {
 
 private extension FoundationNetworkRequestDispatcher {
     func request(_ urlRequest: URLRequest) async throws -> (Data, URLResponse) {
-        return try await self.session.data(for: urlRequest)
+        if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) {
+            return try await self.session.data(for: urlRequest)
+        } else {
+            return try await withCheckedThrowingContinuation { continuation in
+                self.session.dataTask(with: urlRequest) { data, response, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else if let data = data, let response = response {
+                        continuation.resume(returning: (data, response))
+                    } else {
+                        continuation.resume(throwing: NetworkingError.unexpectedError)
+                    }
+                }
+            }
+        }
     }
 }
 
