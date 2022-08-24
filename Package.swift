@@ -15,9 +15,8 @@ let package = Package(
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-nio", .upToNextMajor(from: "2.40.0")),
-        .package(url: "https://github.com/apple/swift-nio-extras", .upToNextMajor(from: "1.12.1")),
-        .package(url: "https://github.com/swift-server/async-http-client", .upToNextMajor(from: "1.11.1")),
+        // All dependencies in this package are conditional to support the broadest range of Swift versions.
+        // See the bottom of this package for more information.
     ],
     targets: [
         // Product Targets
@@ -28,13 +27,9 @@ let package = Package(
         .target(
             name: "KippleNetworking",
             dependencies: [
-                .product(
-                    name: "AsyncHTTPClient",
-                    package: "async-http-client"
-                ),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "NIOConcurrencyHelpers", package: "swift-nio"),
                 .product(name: "NIOHTTPCompression", package: "swift-nio-extras"),
-                // Internal
                 .target(name: "KippleCodable"),
             ],
             swiftSettings: [
@@ -62,4 +57,18 @@ let package = Package(
 package.dependencies.append(
     .package(url: "https://github.com/swift-kipple/Tools", from: "0.2.5")
 )
+#endif
+
+#if swift(>=5.4)
+package.dependencies.append(contentsOf: [
+    .package(url: "https://github.com/apple/swift-nio", from: "2.41.1"),
+    .package(url: "https://github.com/apple/swift-nio-extras", from: "1.12.1"),
+    .package(url: "https://github.com/swift-server/async-http-client", from: "1.11.5"),
+])
+#elseif swift(>=5.3)
+package.dependencies.append(contentsOf: [
+    .package(url: "https://github.com/apple/swift-nio", .exact("2.39.0")),
+    .package(url: "https://github.com/apple/swift-nio-extras", .exact("1.10.2")),
+    .package(url: "https://github.com/swift-server/async-http-client", .exact("1.9.0")),
+])
 #endif
