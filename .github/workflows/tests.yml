@@ -21,22 +21,6 @@ jobs:
         uses: styfle/cancel-workflow-action@0.10.0
         with:
           access_token: ${{ github.token }}
-  # lint:
-  #   name: Lint
-  #   runs-on: macos-11
-  #   permissions:
-  #     pull-requests: write
-  #   env:
-  #     DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Install Dependencies
-  #       run: |
-  #         bundle install
-  #         brew install swiftformat
-  #     - name: Run Danger
-  #       run: sh ./scripts/danger_lint.sh
   swift_test_linux:
     name: swift test (Ubuntu)
     # Available Runners: https://github.com/actions/virtual-environments
