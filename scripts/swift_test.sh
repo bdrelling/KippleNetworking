@@ -9,8 +9,8 @@ output_directory=${1-$DEPLOY_DIRECTORY}
 if [ ! -z $output_directory ]; then
     mkdir -p $output_directory
 
-    swift test -c debug --enable-code-coverage
+    swift test -c debug --enable-code-coverage --enable-test-discovery
     cp $(swift test --show-codecov-path) "${output_directory}/codecov.json"
 else
-    swift test -c debug
+    swift test -c debug --enable-test-discovery
 fi

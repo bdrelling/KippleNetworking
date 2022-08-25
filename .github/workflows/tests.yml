@@ -55,6 +55,7 @@ jobs:
           path: ${{ env.DEPLOY_DIRECTORY }}
   swift_test_xcode:
     name: swift test (Xcode)
+    # Available Runners: https://github.com/actions/virtual-environments
     runs-on: macos-11
     needs: [prepare]
     strategy:
@@ -65,6 +66,7 @@ jobs:
           - 12.4 # 5.3.2
           - 12.5.1 # 5.4.2
           - 13.2 # 5.5.2
+          - 13.4 # 5.6.1
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -74,8 +76,10 @@ jobs:
           xcode-version: ${{ matrix.xcode_version }}
       - name: Swift Version Check
         run: swift --version
-      # - name: Upload Step Output
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: Output (${{ matrix.xcode_version }})
-      #     path: ${{ env.DEPLOY_DIRECTORY }}
+      - name: Run Tests
+        run: sh ./scripts/swift_test.sh
+      - name: Upload Step Output
+        uses: actions/upload-artifact@v1
+        with:
+          name: Output (${{ matrix.xcode_version }})
+          path: ${{ env.DEPLOY_DIRECTORY }}
