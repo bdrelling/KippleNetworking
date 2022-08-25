@@ -53,9 +53,9 @@ jobs:
         with:
           name: Output (macOS)
           path: ${{ env.DEPLOY_DIRECTORY }}
-  swift_test_versions:
-    name: swift test (versions)
-    runs-on: macos-12
+  swift_test_xcode:
+    name: swift test (Xcode)
+    runs-on: macos-11
     needs: [prepare]
     strategy:
       matrix:
