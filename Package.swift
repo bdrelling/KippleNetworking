@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.4
 
 import PackageDescription
 
@@ -15,8 +15,9 @@ let package = Package(
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
     dependencies: [
-        // All dependencies in this package are conditional to support the broadest range of Swift versions.
-        // See the bottom of this package for more information.
+        .package(url: "https://github.com/apple/swift-nio", from: "2.41.1"),
+        .package(url: "https://github.com/apple/swift-nio-extras", from: "1.12.1"),
+        .package(url: "https://github.com/swift-server/async-http-client", from: "1.11.5"),
     ],
     targets: [
         // Product Targets
@@ -57,18 +58,4 @@ let package = Package(
 package.dependencies.append(
     .package(url: "https://github.com/swift-kipple/Tools", from: "0.2.5")
 )
-#endif
-
-#if swift(>=5.4)
-package.dependencies.append(contentsOf: [
-    .package(url: "https://github.com/apple/swift-nio", from: "2.41.1"),
-    .package(url: "https://github.com/apple/swift-nio-extras", from: "1.12.1"),
-    .package(url: "https://github.com/swift-server/async-http-client", from: "1.11.5"),
-])
-#elseif swift(>=5.3)
-package.dependencies.append(contentsOf: [
-    .package(url: "https://github.com/apple/swift-nio", .exact("2.39.0")),
-    .package(url: "https://github.com/apple/swift-nio-extras", .exact("1.10.2")),
-    .package(url: "https://github.com/swift-server/async-http-client", .exact("1.9.0")),
-])
 #endif
