@@ -1,4 +1,4 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.5
 
 import PackageDescription
 
@@ -18,6 +18,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio", from: "2.41.1"),
         .package(url: "https://github.com/apple/swift-nio-extras", from: "1.12.1"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.11.5"),
+        .package(url: "https://github.com/swift-kipple/Tools", from: "0.2.5"),
     ],
     targets: [
         // Product Targets
@@ -52,10 +53,3 @@ let package = Package(
         ),
     ]
 )
-
-#if swift(>=5.5)
-// Add Kipple Tools if possible.
-package.dependencies.append(
-    .package(url: "https://github.com/swift-kipple/Tools", from: "0.2.5")
-)
-#endif
