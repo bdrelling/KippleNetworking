@@ -12,3 +12,5 @@ jobs:
     uses: bdrelling/workflows/.github/workflows/swift_test_universal_package_5_5.yml@main
     with:
       scheme: KippleNetworking-Package
+    secrets:
+      DISCORD_CI_WEBHOOK: ${{ secrets.DISCORD_CI_WEBHOOK }}
