@@ -16,9 +16,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-nio", from: "2.41.1"),
-        .package(url: "https://github.com/apple/swift-nio-extras", from: "1.12.1"),
+        .package(url: "https://github.com/apple/swift-nio-extras", from: "1.13.0"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.11.5"),
-        .package(url: "https://github.com/swift-kipple/Tools", from: "0.2.5"),
+        .package(url: "https://github.com/swift-kipple/Tools", from: "0.3.0"),
     ],
     targets: [
         // Product Targets
