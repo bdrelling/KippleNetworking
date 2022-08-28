@@ -13,6 +13,6 @@ jobs:
     secrets:
       DISCORD_CI_WEBHOOK: ${{ secrets.DISCORD_CI_WEBHOOK }}
     with:
-      scheme: KippleNetworking
+      scheme: KippleNetworking-Package
       platforms: iOS tvOS macOS watchOS Linux
       swift-versions: 5.5 5.6
