@@ -16,7 +16,7 @@ public extension URLRequest {
         url: URLConvertible,
         method: HTTPMethod = .get,
         parameters: ParameterDictionaryConvertible? = nil,
-        headers: HTTPHeaderDictionaryConvertible? = nil,
+        headers: [String: String] = [:],
         encoding: ParameterEncoding? = nil
     ) throws {
         let url = try url.asURL()
@@ -28,6 +28,22 @@ public extension URLRequest {
 
         // Parameters must be set after setting headers, because encoding dictates (and therefore overrides) the Content-Type header
         self.setParameters(parameters, method: method, encoding: encoding)
+    }
+
+    init(
+        url: URLConvertible,
+        method: HTTPMethod = .get,
+        parameters: ParameterDictionaryConvertible? = nil,
+        headers: [HTTPHeader: String],
+        encoding: ParameterEncoding? = nil
+    ) throws {
+        try self.init(
+            url: url,
+            method: method,
+            parameters: parameters,
+            headers: headers.asHeaderDictionary(),
+            encoding: encoding
+        )
     }
 }
 

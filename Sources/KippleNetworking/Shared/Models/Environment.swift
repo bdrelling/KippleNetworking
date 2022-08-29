@@ -28,4 +28,20 @@ public struct Environment {
         self.timeout = timeout
         self.rootResponseKey = rootResponseKey
     }
+
+    public init(
+        baseURL: String,
+        headers: [HTTPHeader: String],
+        parameters: [String: Any] = [:],
+        timeout: Int? = nil,
+        rootResponseKey: String? = nil
+    ) {
+        self.init(
+            baseURL: baseURL,
+            headers: headers.asHeaderDictionary(),
+            parameters: parameters,
+            timeout: timeout,
+            rootResponseKey: rootResponseKey
+        )
+    }
 }
