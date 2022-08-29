@@ -1,7 +1,6 @@
 // Copyright © 2022 Brian Drelling. All rights reserved.
 
 import Foundation
-import KippleCodable
 
 public enum NetworkingError: Error {
     case invalidContentType(String)

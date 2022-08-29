@@ -4,6 +4,7 @@
 
 import AsyncHTTPClient
 import Foundation
+import Logging
 import NIO
 import NIOHTTP1
 
@@ -41,7 +42,7 @@ private extension NIONetworkRequestDispatcher {
 }
 
 extension NIONetworkRequestDispatcher: NetworkRequestDispatching {
-    public func request(_ request: Request, with environment: Environment) async throws -> DataResponse<Data> {
+    public func request(_ request: Request, with environment: Environment, logger: Logger? = nil) async throws -> DataResponse<Data> {
         let httpClientRequest = try request.asHTTPClientRequest(with: environment)
         let (data, response) = try await self.request(httpClientRequest, timeout: .seconds(Int64(environment.timeout ?? 10)))
 

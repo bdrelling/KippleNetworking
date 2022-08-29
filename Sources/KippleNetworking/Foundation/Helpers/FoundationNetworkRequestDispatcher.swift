@@ -3,6 +3,7 @@
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 
 import Foundation
+import Logging
 
 public final class FoundationNetworkRequestDispatcher {
     public let decoder: JSONDecoder
@@ -38,7 +39,7 @@ private extension FoundationNetworkRequestDispatcher {
 }
 
 extension FoundationNetworkRequestDispatcher: NetworkRequestDispatching {
-    public func request(_ request: Request, with environment: Environment) async throws -> DataResponse<Data> {
+    public func request(_ request: Request, with environment: Environment, logger: Logger? = nil) async throws -> DataResponse<Data> {
         let urlRequest = try request.asURLRequest(with: environment)
         let (data, response) = try await self.request(urlRequest)
 

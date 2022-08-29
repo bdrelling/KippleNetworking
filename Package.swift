@@ -32,7 +32,6 @@ let package = Package(
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "NIOConcurrencyHelpers", package: "swift-nio"),
                 .product(name: "NIOHTTPCompression", package: "swift-nio-extras"),
-                .target(name: "KippleCodable"),
             ],
             swiftSettings: [
                 .define("DEBUG", .when(configuration: .debug)),
