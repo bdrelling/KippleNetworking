@@ -35,7 +35,7 @@ public enum PrettyPrintMode {
 private enum PrettyPrintConstants {
     static let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         return encoder
     }()
 }
