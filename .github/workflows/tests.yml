@@ -15,4 +15,4 @@ jobs:
     with:
       scheme: KippleNetworking-Package
       platforms: iOS tvOS macOS watchOS Linux
-      swift-versions: 5.5 5.6
+      swift-versions: 5.5 5.6 5.7
