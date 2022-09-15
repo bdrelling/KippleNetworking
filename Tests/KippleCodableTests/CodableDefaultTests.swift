@@ -4,10 +4,16 @@
 import XCTest
 
 final class CodableDefaultTests: XCTestCase {
+    private let encoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        return encoder
+    }()
+
     /// `emptyString` is `""`, and therefore _should not_ get encoded.
     func testEncodingDefaultValueSucceeds() throws {
         let example = Example(control: 1, emptyString: "")
-        let data = try JSONEncoder().encode(example)
+        let data = try self.encoder.encode(example)
         let actualJSON = try XCTUnwrap(String(data: data, encoding: .utf8))
 
         let expectedJSON = #"{"control":1}"#
@@ -18,7 +24,7 @@ final class CodableDefaultTests: XCTestCase {
     /// `emptyString` is `"Boo"`, and therefore _should_ get encoded.
     func testEncodingNonDefaultValueSucceeds() throws {
         let example = Example(control: 1, emptyString: "Boo")
-        let data = try JSONEncoder().encode(example)
+        let data = try self.encoder.encode(example)
         let actualJSON = try XCTUnwrap(String(data: data, encoding: .utf8))
 
         let expectedJSON = #"{"control":1,"emptyString":"Boo"}"#
