@@ -10,6 +10,8 @@ public protocol Request {
     var headers: [String: String] { get }
     var encoding: ParameterEncoding { get }
     var rootResponseKey: String? { get }
+
+    func validate() throws
 }
 
 public extension Request {
@@ -36,6 +38,8 @@ public extension Request {
     var rootResponseKey: String? {
         nil
     }
+
+    func validate() throws {}
 }
 
 // MARK: - Supporting Types

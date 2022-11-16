@@ -41,3 +41,16 @@ public struct Environment {
         )
     }
 }
+
+// MARK: - Extensions
+
+extension Environment: Equatable {
+    public static func == (lhs: Environment, rhs: Environment) -> Bool {
+        lhs.baseURL == rhs.baseURL
+            && lhs.headers == rhs.headers
+            && lhs.timeout == rhs.timeout
+            && lhs.rootResponseKey == rhs.rootResponseKey
+            // source: https://stackoverflow.com/questions/32365654/how-do-i-compare-two-dictionaries-in-swift
+            && NSDictionary(dictionary: lhs.parameters).isEqual(to: rhs.parameters)
+    }
+}
