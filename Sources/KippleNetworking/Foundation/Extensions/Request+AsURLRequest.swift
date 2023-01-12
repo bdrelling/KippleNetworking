@@ -9,13 +9,7 @@ extension Request {
         let baseURL = self.baseURL ?? environment.baseURL.trimmingSlashes()
         let path = self.path.trimmingSlashes()
 
-        let url: String = {
-            if path.isEmpty {
-                return baseURL
-            } else {
-                return "\(baseURL)/\(path)"
-            }
-        }()
+        let url = path.isEmpty ? baseURL : "\(baseURL)/\(path)"
 
         // Merge parameters together, preferring any overridden parameters on the request.
         let parameters = environment.parameters.merging(self.parameters, uniquingKeysWith: { _, parameter in parameter })
