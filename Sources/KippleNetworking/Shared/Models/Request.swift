@@ -1,4 +1,4 @@
-// Copyright © 2022 Brian Drelling. All rights reserved.
+// Copyright © 2023 Brian Drelling. All rights reserved.
 
 import Foundation
 
@@ -82,4 +82,18 @@ public struct DecodableRequest<T: Decodable>: Request, ResponseAnticipating {
 
 public protocol ResponseAnticipating: Request {
     associatedtype Response: Decodable
+}
+
+// MARK: - Convenience
+
+public extension HTTPRequest {
+    init(
+        url: String,
+        method: HTTPMethod = .get,
+        parameters: [String: Any] = [:],
+        headers: [String: String] = [:],
+        encoding: ParameterEncoding? = nil
+    ) {
+        self.init(path: "", baseURL: url, method: method, parameters: parameters, headers: headers, encoding: encoding)
+    }
 }
