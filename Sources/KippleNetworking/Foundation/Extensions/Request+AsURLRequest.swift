@@ -9,7 +9,7 @@ extension Request {
         let baseURL = self.baseURL ?? environment.baseURL.trimmingSlashes()
         let path = self.path.trimmingSlashes()
 
-        let url = {
+        let url: String = {
             if path.isEmpty {
                 return baseURL
             } else {
