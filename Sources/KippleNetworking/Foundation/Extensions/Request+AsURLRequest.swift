@@ -21,6 +21,7 @@ extension Request {
             url: url,
             method: .init(rawValue: self.method.rawValue) ?? .get,
             parameters: parameters,
+            body: self.body,
             headers: headers,
             encoding: self.encoding
         )

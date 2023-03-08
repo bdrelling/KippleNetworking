@@ -1,8 +1,9 @@
-// Copyright © 2022 Brian Drelling. All rights reserved.
+// Copyright © 2023 Brian Drelling. All rights reserved.
 
 import Foundation
 
 public enum NetworkingError: Error {
+    case httpBodyConflictsWithParameterEncoding
     case invalidContentType(String)
     case invalidHTTPHeader(String)
     case invalidStatusCode(HTTPStatusCode)
@@ -15,6 +16,8 @@ public enum NetworkingError: Error {
 extension NetworkingError: LocalizedError {
     public var errorDescription: String? {
         switch self {
+        case .httpBodyConflictsWithParameterEncoding:
+            return "Unable to set both data and parameters as HTTP body."
         case let .invalidContentType(contentType):
             return "Invalid content type '\(contentType)'."
         case let .invalidHTTPHeader(rawValue):

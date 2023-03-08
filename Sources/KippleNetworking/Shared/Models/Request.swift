@@ -7,6 +7,7 @@ public protocol Request {
     var path: String { get }
     var method: HTTPMethod { get }
     var parameters: [String: Any] { get }
+    var body: Data? { get }
     var headers: [String: String] { get }
     var encoding: ParameterEncoding { get }
     var rootResponseKey: String? { get }
@@ -25,6 +26,10 @@ public extension Request {
 
     var parameters: [String: Any] {
         [:]
+    }
+
+    var body: Data? {
+        nil
     }
 
     var headers: [String: String] {
@@ -49,6 +54,7 @@ public struct HTTPRequest: Request {
     public let path: String
     public let method: HTTPMethod
     public let parameters: [String: Any]
+    public let body: Data?
     public let headers: [String: String]
     public let encoding: ParameterEncoding
 
@@ -57,6 +63,7 @@ public struct HTTPRequest: Request {
         baseURL: String? = nil,
         method: HTTPMethod = .get,
         parameters: [String: Any] = [:],
+        body: Data? = nil,
         headers: [String: String] = [:],
         encoding: ParameterEncoding? = nil
     ) {
@@ -64,6 +71,7 @@ public struct HTTPRequest: Request {
         self.baseURL = baseURL
         self.method = method
         self.parameters = parameters
+        self.body = body
         self.headers = headers
         self.encoding = encoding ?? .defaultEncoding(for: method)
     }
@@ -91,9 +99,10 @@ public extension HTTPRequest {
         url: String,
         method: HTTPMethod = .get,
         parameters: [String: Any] = [:],
+        body: Data? = nil,
         headers: [String: String] = [:],
         encoding: ParameterEncoding? = nil
     ) {
-        self.init(path: "", baseURL: url, method: method, parameters: parameters, headers: headers, encoding: encoding)
+        self.init(path: "", baseURL: url, method: method, parameters: parameters, body: body, headers: headers, encoding: encoding)
     }
 }

@@ -2,6 +2,22 @@
 
 import PackageDescription
 
+#if os(Linux)
+let packageDependencies: [Package.Dependency] = [
+    .package(url: "https://github.com/apple/swift-nio", from: "2.41.1"),
+    .package(url: "https://github.com/apple/swift-nio-extras", from: "1.13.0"),
+    .package(url: "https://github.com/swift-server/async-http-client", from: "1.11.5"),
+]
+let productDependencies: [Target.Dependency] = [
+    .product(name: "AsyncHTTPClient", package: "async-http-client", condition: .when(platforms: [.linux])),
+    .product(name: "NIOConcurrencyHelpers", package: "swift-nio", condition: .when(platforms: [.linux])),
+    .product(name: "NIOHTTPCompression", package: "swift-nio-extras", condition: .when(platforms: [.linux])),
+]
+#else
+let packageDependencies: [Package.Dependency] = []
+let productDependencies: [Target.Dependency] = []
+#endif
+
 let package = Package(
     name: "KippleNetworking",
     platforms: [
@@ -14,10 +30,8 @@ let package = Package(
         .library(name: "KippleCodable", targets: ["KippleCodable"]),
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-nio", from: "2.41.1"),
-        .package(url: "https://github.com/apple/swift-nio-extras", from: "1.13.0"),
-        .package(url: "https://github.com/swift-server/async-http-client", from: "1.11.5"),
+    dependencies: packageDependencies + [
+        .package(url: "https://github.com/apple/swift-log", from: "1.5.2"),
         .package(url: "https://github.com/swift-kipple/Tools", from: "0.3.0"),
     ],
     targets: [
@@ -28,10 +42,8 @@ let package = Package(
         ),
         .target(
             name: "KippleNetworking",
-            dependencies: [
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "NIOConcurrencyHelpers", package: "swift-nio"),
-                .product(name: "NIOHTTPCompression", package: "swift-nio-extras"),
+            dependencies: productDependencies + [
+                .product(name: "Logging", package: "swift-log"),
             ],
             swiftSettings: [
                 .define("DEBUG", .when(configuration: .debug)),
