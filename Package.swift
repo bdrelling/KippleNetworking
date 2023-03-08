@@ -29,9 +29,9 @@ let package = Package(
         .target(
             name: "KippleNetworking",
             dependencies: [
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "NIOConcurrencyHelpers", package: "swift-nio"),
-                .product(name: "NIOHTTPCompression", package: "swift-nio-extras"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client", condition: .when(platforms: [.linux])),
+                .product(name: "NIOConcurrencyHelpers", package: "swift-nio", condition: .when(platforms: [.linux])),
+                .product(name: "NIOHTTPCompression", package: "swift-nio-extras", condition: .when(platforms: [.linux])),
             ],
             swiftSettings: [
                 .define("DEBUG", .when(configuration: .debug)),
