@@ -1,4 +1,4 @@
-// Copyright © 2022 Brian Drelling. All rights reserved.
+// Copyright © 2024 Brian Drelling. All rights reserved.
 
 /// HTTP Methods are a set of request methods to indicate the desired action to be performed for a given resource.
 ///

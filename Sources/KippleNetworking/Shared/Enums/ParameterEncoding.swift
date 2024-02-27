@@ -1,4 +1,4 @@
-// Copyright © 2022 Brian Drelling. All rights reserved.
+// Copyright © 2024 Brian Drelling. All rights reserved.
 
 /// The method by which parameters are encoded for an HTTP request.
 public enum ParameterEncoding {

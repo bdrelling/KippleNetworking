@@ -1,4 +1,4 @@
-// Copyright © 2022 Brian Drelling. All rights reserved.
+// Copyright © 2024 Brian Drelling. All rights reserved.
 
 /// Determines the method by which parameters are encoded when sent via HTTP bodies.
 public enum HTTPBodyEncoding: String {
