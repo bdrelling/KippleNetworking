@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version: 5.7
 
 import PackageDescription
 
@@ -21,18 +21,18 @@ let productDependencies: [Target.Dependency] = []
 let package = Package(
     name: "KippleNetworking",
     platforms: [
-        .iOS(.v13),
-        .macOS(.v10_15),
-        .tvOS(.v13),
-        .watchOS(.v6),
+        .iOS(.v16),
+        .macOS(.v13),
+        .tvOS(.v16),
+        .watchOS(.v9),
     ],
     products: [
         .library(name: "KippleCodable", targets: ["KippleCodable"]),
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
     dependencies: packageDependencies + [
-        .package(url: "https://github.com/apple/swift-log", from: "1.5.2"),
-        .package(url: "https://github.com/swift-kipple/Tools", from: "0.3.0"),
+        .package(url: "https://github.com/apple/swift-log", from: "1.5.4"),
+        .package(url: "https://github.com/swift-kipple/Tools", revision: "4bc0d4cee521e5a7389d832b8fac45cdf4a867f2"),
     ],
     targets: [
         // Product Targets
