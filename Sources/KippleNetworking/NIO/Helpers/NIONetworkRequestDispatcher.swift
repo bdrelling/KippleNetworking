@@ -4,7 +4,7 @@
 
 import AsyncHTTPClient
 import Foundation
-import Logging
+import KippleLogging
 import NIO
 import NIOHTTP1
 

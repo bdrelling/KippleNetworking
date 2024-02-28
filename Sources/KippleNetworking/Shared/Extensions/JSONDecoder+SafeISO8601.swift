@@ -2,7 +2,7 @@
 
 import Foundation
 
-extension JSONDecoder {
+public extension JSONDecoder {
     static let safeISO8601: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .safeISO8601

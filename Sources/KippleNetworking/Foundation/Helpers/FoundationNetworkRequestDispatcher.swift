@@ -3,7 +3,7 @@
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 
 import Foundation
-import Logging
+import KippleLogging
 
 public final class FoundationNetworkRequestDispatcher {
     public let decoder: JSONDecoder

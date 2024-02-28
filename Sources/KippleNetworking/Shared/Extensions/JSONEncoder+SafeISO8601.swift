@@ -2,7 +2,7 @@
 
 import Foundation
 
-extension JSONEncoder {
+public extension JSONEncoder {
     static let safeISO8601: JSONEncoder = {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .safeISO8601

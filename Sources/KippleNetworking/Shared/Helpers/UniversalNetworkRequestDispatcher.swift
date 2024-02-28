@@ -1,7 +1,7 @@
 // Copyright © 2024 Brian Drelling. All rights reserved.
 
 import Foundation
-import Logging
+import KippleLogging
 
 public final class UniversalNetworkRequestDispatcher {
     public let decoder: JSONDecoder

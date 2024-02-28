@@ -27,35 +27,24 @@ let package = Package(
         .watchOS(.v9),
     ],
     products: [
-        .library(name: "KippleCodable", targets: ["KippleCodable"]),
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
     dependencies: packageDependencies + [
-        .package(url: "https://github.com/apple/swift-log", from: "1.5.4"),
+        .package(url: "https://github.com/swift-kipple/Diagnostics", .upToNextMinor(from: "0.3.6")),
+        .package(url: "https://github.com/swift-kipple/Core", .upToNextMinor(from: "0.13.2")),
         .package(url: "https://github.com/swift-kipple/Tools", .upToNextMinor(from: "0.5.0")),
     ],
     targets: [
         // Product Targets
         .target(
-            name: "KippleCodable",
-            dependencies: []
-        ),
-        .target(
             name: "KippleNetworking",
             dependencies: productDependencies + [
-                .product(name: "Logging", package: "swift-log"),
-            ],
-            swiftSettings: [
-                .define("DEBUG", .when(configuration: .debug)),
+                .product(name: "KippleCodable", package: "Core"),
+                .product(name: "KippleLogging", package: "Diagnostics"),
+                .product(name: "KippleCore", package: "Core"),
             ]
         ),
         // Test Targets
-        .testTarget(
-            name: "KippleCodableTests",
-            dependencies: [
-                .target(name: "KippleCodable"),
-            ]
-        ),
         .testTarget(
             name: "KippleNetworkingTests",
             dependencies: [

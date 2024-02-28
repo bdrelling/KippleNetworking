@@ -3,6 +3,7 @@
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 
 import Foundation
+import KippleCodable
 
 extension URLRequest {
     // TODO: Drop the requirement of this function. The problem is that we need one function for if the method is set,
@@ -46,13 +47,13 @@ extension URLRequest {
         }
     }
 
-    mutating func setParameters(_ encodable: Encodable, method: HTTPMethod, encoding: ParameterEncoding? = nil) {
-        let parameters = try? encodable.asDictionary()
+    mutating func setParameters(_ encodable: Encodable, encoder: JSONEncoder = .safeISO8601, method: HTTPMethod, encoding: ParameterEncoding? = nil) {
+        let parameters = try? encodable.asDictionary(encoder: encoder)
         self.setParameters(parameters, method: method, encoding: encoding)
     }
 
-    mutating func setParameters(_ encodable: Encodable, encoding: ParameterEncoding) {
-        let parameters = try? encodable.asDictionary()
+    mutating func setParameters(_ encodable: Encodable, encoder: JSONEncoder = .safeISO8601, encoding: ParameterEncoding) {
+        let parameters = try? encodable.asDictionary(encoder: encoder)
         self.setParameters(parameters, encoding: encoding)
     }
 }
