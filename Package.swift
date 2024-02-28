@@ -32,7 +32,7 @@ let package = Package(
     ],
     dependencies: packageDependencies + [
         .package(url: "https://github.com/apple/swift-log", from: "1.5.4"),
-        .package(url: "https://github.com/swift-kipple/Tools", revision: "4bc0d4cee521e5a7389d832b8fac45cdf4a867f2"),
+        .package(url: "https://github.com/swift-kipple/Tools", .upToNextMinor(from: "0.5.0")),
     ],
     targets: [
         // Product Targets
