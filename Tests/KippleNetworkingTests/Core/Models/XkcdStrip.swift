@@ -1,6 +1,6 @@
 // Copyright © 2024 Brian Drelling. All rights reserved.
 
-public struct XkcdStrip: Decodable, Equatable {
+public struct XKCDStrip: Decodable, Equatable {
     let month: String
     let num: Int
     let link: String
@@ -16,7 +16,7 @@ public struct XkcdStrip: Decodable, Equatable {
 
 // MARK: - Convenience
 
-extension XkcdStrip {
+extension XKCDStrip {
     static let exploitsOfAMom: Self = .init(
         month: "10",
         num: 327,

@@ -2,9 +2,8 @@
 
 import KippleNetworking
 
-// TODO: Use Xkcd service? https://github.com/swift-server/async-http-client/blob/main/Examples/GetJSON/GetJSON.swift
-struct GetXkcdStripRequest: Request, ResponseAnticipating {
-    typealias Response = XkcdStrip
+struct GetXKCDStripRequest: Request, ResponseAnticipating {
+    typealias Response = XKCDStrip
 
     var path: String {
         "/\(self.id)/info.0.json"

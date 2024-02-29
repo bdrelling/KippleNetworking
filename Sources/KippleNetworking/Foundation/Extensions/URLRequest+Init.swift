@@ -34,7 +34,7 @@ public extension URLRequest {
         self.setHeaders(headers)
 
         // Parameters must be set after setting headers, because encoding dictates (and therefore overrides) the Content-Type header
-        self.setParameters(parameters, method: method, encoding: encoding)
+        try self.setParameters(parameters, method: method, encoding: encoding)
 
         self.httpBody = body
     }

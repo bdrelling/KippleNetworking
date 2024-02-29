@@ -2,8 +2,8 @@
 
 import KippleNetworking
 
-struct GetLatestXkcdStripRequest: Request, ResponseAnticipating {
-    typealias Response = XkcdStrip
+struct GetLatestXKCDStripRequest: Request, ResponseAnticipating {
+    typealias Response = XKCDStrip
 
     var path = "/info.0.json"
 }

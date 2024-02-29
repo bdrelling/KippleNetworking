@@ -13,12 +13,12 @@ extension URLRequest {
     //       1, method without encoding: Use the default method's encoding.
     //       2. method with encoding: Use the method, but override the encoding.
     //       3. encoding without method: Doesn't matter what method, override the encoding.
-    mutating func setParameters(_ parameters: ParameterDictionaryConvertible?, method: HTTPMethod, encoding: ParameterEncoding? = nil) {
+    mutating func setParameters(_ parameters: ParameterDictionaryConvertible?, method: HTTPMethod, encoding: ParameterEncoding? = nil) throws {
         let encoding = encoding ?? .defaultEncoding(for: method)
-        self.setParameters(parameters, encoding: encoding)
+        try self.setParameters(parameters, encoding: encoding)
     }
 
-    mutating func setParameters(_ parameters: ParameterDictionaryConvertible?, encoding: ParameterEncoding) {
+    mutating func setParameters(_ parameters: ParameterDictionaryConvertible?, encoding: ParameterEncoding) throws {
         guard let url = self.url, let parameters = parameters?.asParameterDictionary() else {
             return
         }
@@ -27,11 +27,7 @@ extension URLRequest {
         case .httpBody(.json):
             self.setValue(HTTPBodyEncoding.json.rawValue, forHTTPHeaderField: .contentType)
 
-            do {
-                self.httpBody = try parameters.asJSONSerializedData()
-            } catch {
-                // TODO: Throw error
-            }
+            self.httpBody = try parameters.asJSONSerializedData()
         case .httpBody(.wwwFormURLEncoded):
             self.setValue(HTTPBodyEncoding.wwwFormURLEncoded.rawValue, forHTTPHeaderField: .contentType)
 
@@ -47,14 +43,14 @@ extension URLRequest {
         }
     }
 
-    mutating func setParameters(_ encodable: Encodable, encoder: JSONEncoder = .safeISO8601, method: HTTPMethod, encoding: ParameterEncoding? = nil) {
-        let parameters = try? encodable.asDictionary(encoder: encoder)
-        self.setParameters(parameters, method: method, encoding: encoding)
+    mutating func setParameters(_ encodable: Encodable, encoder: JSONEncoder = .safeISO8601, method: HTTPMethod, encoding: ParameterEncoding? = nil) throws {
+        let parameters = try encodable.asDictionary(encoder: encoder)
+        try self.setParameters(parameters, method: method, encoding: encoding)
     }
 
-    mutating func setParameters(_ encodable: Encodable, encoder: JSONEncoder = .safeISO8601, encoding: ParameterEncoding) {
-        let parameters = try? encodable.asDictionary(encoder: encoder)
-        self.setParameters(parameters, encoding: encoding)
+    mutating func setParameters(_ encodable: Encodable, encoder: JSONEncoder = .safeISO8601, encoding: ParameterEncoding) throws {
+        let parameters = try encodable.asDictionary(encoder: encoder)
+        try self.setParameters(parameters, encoding: encoding)
     }
 }
 
