@@ -1,7 +1,7 @@
 // Copyright © 2024 Brian Drelling. All rights reserved.
 
 import Foundation
-import KippleCore
+import KippleFoundation
 
 extension URLComponents {
     mutating func setQueryItems(with parameters: [String: Any]) {

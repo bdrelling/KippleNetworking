@@ -30,7 +30,7 @@ let package = Package(
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
     dependencies: packageDependencies + [
-        .package(url: "https://github.com/bdrelling/Kipple", revision: "847dd69963a77f4ac7835a4d947f5901ab8115b8"),
+        .package(url: "https://github.com/bdrelling/Kipple", revision: "7adb2ccc7b330e015cce810fc8d8e76670aa5404"),
         .package(url: "https://github.com/bdrelling/KippleTools", .upToNextMinor(from: "0.5.0")),
     ],
     targets: [
@@ -39,7 +39,7 @@ let package = Package(
             name: "KippleNetworking",
             dependencies: productDependencies + [
                 .product(name: "KippleCodable", package: "Kipple"),
-                .product(name: "KippleCore", package: "Kipple"),
+                .product(name: "KippleFoundation", package: "Kipple"),
                 .product(name: "KippleLogging", package: "Kipple"),
             ]
         ),

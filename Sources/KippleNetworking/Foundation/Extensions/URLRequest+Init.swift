@@ -3,7 +3,7 @@
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 
 import Foundation
-import KippleCore
+import KippleFoundation
 
 public extension URLRequest {
     /// Creates a configured URLRequest.
