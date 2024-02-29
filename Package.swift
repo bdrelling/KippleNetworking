@@ -30,18 +30,17 @@ let package = Package(
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
     dependencies: packageDependencies + [
-        .package(url: "https://github.com/swift-kipple/Diagnostics", .upToNextMinor(from: "0.3.6")),
-        .package(url: "https://github.com/swift-kipple/Core", .upToNextMinor(from: "0.13.2")),
-        .package(url: "https://github.com/swift-kipple/Tools", .upToNextMinor(from: "0.5.0")),
+        .package(url: "https://github.com/bdrelling/Kipple", revision: "847dd69963a77f4ac7835a4d947f5901ab8115b8"),
+        .package(url: "https://github.com/bdrelling/KippleTools", .upToNextMinor(from: "0.5.0")),
     ],
     targets: [
         // Product Targets
         .target(
             name: "KippleNetworking",
             dependencies: productDependencies + [
-                .product(name: "KippleCodable", package: "Core"),
-                .product(name: "KippleLogging", package: "Diagnostics"),
-                .product(name: "KippleCore", package: "Core"),
+                .product(name: "KippleCodable", package: "Kipple"),
+                .product(name: "KippleCore", package: "Kipple"),
+                .product(name: "KippleLogging", package: "Kipple"),
             ]
         ),
         // Test Targets
