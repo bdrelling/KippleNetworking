@@ -1,4 +1,4 @@
-name: Tests
+name: Apple Tests
 
 on:
   workflow_dispatch:
@@ -15,5 +15,5 @@ jobs:
       DISCORD_CI_WEBHOOK: ${{ secrets.DISCORD_CI_WEBHOOK }}
     with:
       scheme: KippleNetworking
-      platforms: iOS macOS tvOS watchOS Linux
+      platforms: Linux
       code-coverage: true

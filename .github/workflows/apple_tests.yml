@@ -1,0 +1,19 @@
+name: Apple Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  swift_test:
+    uses: bdrelling/ci/.github/workflows/swift_test.yml@main
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      DISCORD_CI_WEBHOOK: ${{ secrets.DISCORD_CI_WEBHOOK }}
+    with:
+      scheme: KippleNetworking
+      platforms: iOS macOS tvOS watchOS
+      code-coverage: true
