@@ -7,6 +7,10 @@ final class HTTPClientTests: XCTestCase {
     /// The ID of the XKCD strip we're testing.
     private let stripID = 123
     
+    private var expectedURL: String {
+        "https://xkcd.com/\(self.stripID)/info.0.json"
+    }
+    
     // MARK: Requests
     
     /// Tests making a request with a given request object.
@@ -14,6 +18,8 @@ final class HTTPClientTests: XCTestCase {
         // GIVEN
         let httpClient = HTTPClient(environment: .xkcd)
         let request = GetXKCDStripRequest(id: self.stripID)
+        
+        XCTAssertEqual(request.urlString(with: .xkcd), self.expectedURL)
         
         // WHEN
         let response = try await httpClient.request(request)
@@ -31,6 +37,8 @@ final class HTTPClientTests: XCTestCase {
         let httpClient = HTTPClient(environment: .xkcd)
         let request = GetXKCDStripRequest(id: self.stripID)
         
+        XCTAssertEqual(request.urlString(with: .xkcd), self.expectedURL)
+        
         // WHEN
         let response: DataResponse<XKCDStrip> = try await httpClient.requestDecoded(request)
         let decodedStrip = try httpClient.dispatcher.decoder.decode(XKCDStrip.self, from: response.data)
@@ -46,6 +54,8 @@ final class HTTPClientTests: XCTestCase {
         // GIVEN
         let client = HTTPClient(environment: .xkcd)
         let request = GetXKCDStripRequest(id: self.stripID)
+        
+        XCTAssertEqual(request.urlString(with: .xkcd), self.expectedURL)
         
         // WHEN
         let response: XKCDStrip = try await client.response(for: request)
@@ -63,6 +73,8 @@ final class HTTPClientTests: XCTestCase {
         let httpClient = HTTPClient(environment: .xkcd)
         let url = GetXKCDStripRequest(id: self.stripID).urlString(with: .xkcd)
         
+        XCTAssertEqual(url, self.expectedURL)
+        
         // WHEN
         let response: DataResponse<XKCDStrip> = try await httpClient.request(url: url)
         let decodedStrip = try httpClient.dispatcher.decoder.decode(XKCDStrip.self, from: response.data)
@@ -79,6 +91,8 @@ final class HTTPClientTests: XCTestCase {
         // GIVEN
         let httpClient = HTTPClient(environment: .xkcd)
         let url = GetXKCDStripRequest(id: self.stripID).urlString(with: .xkcd)
+        
+        XCTAssertEqual(url, self.expectedURL)
         
         // WHEN
         let response = try await httpClient.request(url: url)
