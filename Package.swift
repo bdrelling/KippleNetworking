@@ -33,7 +33,7 @@ let package = Package(
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
     dependencies: packageDependencies + [
-        .package(url: "https://github.com/bdrelling/Kipple", revision: "f1d909107828d12c863ba10c847cea6bfc45e139"),
+        .package(url: "https://github.com/bdrelling/Kipple", .upToNextMinor(from: "0.14.0")),
         .package(url: "https://github.com/bdrelling/KippleTools", .upToNextMinor(from: "0.5.0")),
     ],
     targets: [
