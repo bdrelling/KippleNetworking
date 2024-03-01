@@ -3,8 +3,7 @@
 [![Latest Release](https://img.shields.io/github/v/tag/bdrelling/KippleNetworking?color=blue&label=)](https://github.com/bdrelling/KippleNetworking/tags)
 [![Swift Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fbdrelling%2FKippleNetworking%2Fbadge%3Ftype%3Dswift-versions&label=)](https://swiftpackageindex.com/bdrelling/KippleNetworking)
 [![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fbdrelling%2FKippleNetworking%2Fbadge%3Ftype%3Dplatforms&label=)](https://swiftpackageindex.com/bdrelling/KippleNetworking)
-[![License](https://img.shields.io/github/license/bdrelling/KippleNetworking?label=)](https://github.com/bdrelling/KippleNetworking/blob/main/LICENSE)
-
+[![License](https://img.shields.io/github/license/bdrelling/KippleNetworking?label=)](https://github.com/bdrelling/KippleNetworking/blob/main/LICENSE)  
 [![Apple CI Status](https://github.com/bdrelling/KippleNetworking/actions/workflows/apple_tests.yml/badge.svg)](https://github.com/bdrelling/KippleNetworking/actions/workflows/apple_tests.yml)
 [![Linux CI Status](https://github.com/bdrelling/KippleNetworking/actions/workflows/linux_tests.yml/badge.svg)](https://github.com/bdrelling/KippleNetworking/actions/workflows/linux_tests.yml)
 [![Code Coverage](https://img.shields.io/codecov/c/github/bdrelling/KippleNetworking)](https://codecov.io/gh/bdrelling/KippleNetworking)
