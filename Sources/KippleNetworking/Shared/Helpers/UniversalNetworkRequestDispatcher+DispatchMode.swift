@@ -36,11 +36,8 @@ public extension UniversalNetworkRequestDispatcher {
 public extension UniversalNetworkRequestDispatcher.DispatchMode {
     static let automatic: Self = .appleFoundation(.shared)
 }
-
 #elseif canImport(AsyncHTTPClient)
-
 public extension UniversalNetworkRequestDispatcher.DispatchMode {
     static let automatic: Self = .swiftNIO(.init(eventLoopGroupProvider: .singleton))
 }
-
 #endif

@@ -7,9 +7,9 @@ import PackageDescription
 // and include the package and product dependencies directly in their respective locations.
 #if os(Linux)
 let packageDependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/apple/swift-nio", from: "2.41.1"),
-    .package(url: "https://github.com/apple/swift-nio-extras", from: "1.13.0"),
-    .package(url: "https://github.com/swift-server/async-http-client", from: "1.11.5"),
+    .package(url: "https://github.com/apple/swift-nio", from: "2.63.0"),
+    .package(url: "https://github.com/apple/swift-nio-extras", from: "1.21.0"),
+    .package(url: "https://github.com/swift-server/async-http-client", from: "1.20.1"),
 ]
 let productDependencies: [Target.Dependency] = [
     .product(name: "AsyncHTTPClient", package: "async-http-client"),
