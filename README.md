@@ -22,7 +22,6 @@ A Swift library that offers cross-platform (Apple and Linux) networking support,
   - [Dependencies](#dependencies)
 - [Kipple Libraries](#kipple-libraries)
 - [Installation](#installation)
-- [Maintenance](#maintenance)
 - [Compatibility](#compatibility)
 - [Stability](#stability)
 - [Contributing](#contributing)
@@ -63,6 +62,10 @@ See [Installation](https://github.com/bdrelling/Kipple#installation).
 See [Compatibility](https://github.com/bdrelling/Kipple#compatibility).
 
 ## Stability
+
+[![Apple CI Status](https://github.com/bdrelling/KippleNetworking/actions/workflows/apple_tests.yml/badge.svg)](https://github.com/bdrelling/KippleNetworking/actions/workflows/apple_tests.yml)
+[![Linux CI Status](https://github.com/bdrelling/KippleNetworking/actions/workflows/linux_tests.yml/badge.svg)](https://github.com/bdrelling/KippleNetworking/actions/workflows/linux_tests.yml)
+[![Code Coverage](https://img.shields.io/codecov/c/github/bdrelling/KippleNetworking)](https://codecov.io/gh/bdrelling/KippleNetworking)
 
 See [Stability](https://github.com/bdrelling/Kipple#stability).
 
