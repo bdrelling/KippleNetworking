@@ -40,7 +40,7 @@ public extension UniversalNetworkRequestDispatcher.DispatchMode {
 #elseif canImport(AsyncHTTPClient)
 
 public extension UniversalNetworkRequestDispatcher.DispatchMode {
-    static let automatic: Self = .swiftNIO(.init(eventLoopGroupProvider: .singleton))
+    static let automatic: Self = .swiftNIO(.init(eventLoopGroupProvider: .createNew))
 }
 
 #endif
