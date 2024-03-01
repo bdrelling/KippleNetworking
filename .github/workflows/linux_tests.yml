@@ -1,4 +1,4 @@
-name: Apple Tests
+name: Linux Tests
 
 on:
   workflow_dispatch:
