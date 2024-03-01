@@ -2,17 +2,22 @@
 import XCTest
 
 final class HTTPClientTests: XCTestCase {
+    // MARK: Properties
+    
+    /// The ID of the XKCD strip we're testing.
+    private let stripID = 123
+    
     // MARK: Requests
     
     /// Tests making a request with a given request object.
     func testRequest() async throws {
         // GIVEN
         let httpClient = HTTPClient(environment: .xkcd)
-        let request = GetXKCDStripRequest(id: 123)
+        let request = GetXKCDStripRequest(id: self.stripID)
         
         // WHEN
         let response = try await httpClient.request(request)
-        let decodedStrip = try JSONDecoder().decode(XKCDStrip.self, from: response.data)
+        let decodedStrip = try httpClient.dispatcher.decoder.decode(XKCDStrip.self, from: response.data)
         
         // THEN
         XCTAssertNotNil(response)
@@ -24,11 +29,11 @@ final class HTTPClientTests: XCTestCase {
     func testRequestDecoded() async throws {
         // GIVEN
         let httpClient = HTTPClient(environment: .xkcd)
-        let request = GetXKCDStripRequest(id: 123)
+        let request = GetXKCDStripRequest(id: self.stripID)
         
         // WHEN
         let response: DataResponse<XKCDStrip> = try await httpClient.requestDecoded(request)
-        let decodedStrip = try JSONDecoder().decode(XKCDStrip.self, from: response.data)
+        let decodedStrip = try httpClient.dispatcher.decoder.decode(XKCDStrip.self, from: response.data)
         
         // THEN
         XCTAssertNotNil(response)
@@ -39,11 +44,11 @@ final class HTTPClientTests: XCTestCase {
     /// Tests getting a response for a given request object.
     func testResponse() async throws {
         // GIVEN
-        let httpClient = HTTPClient(environment: .xkcd)
-        let request = GetXKCDStripRequest(id: 123)
+        let client = HTTPClient(environment: .xkcd)
+        let request = GetXKCDStripRequest(id: self.stripID)
         
         // WHEN
-        let response: XKCDStrip = try await httpClient.response(for: request)
+        let response: XKCDStrip = try await client.response(for: request)
         
         // THEN
         XCTAssertEqual(response.num, 123)
@@ -56,11 +61,11 @@ final class HTTPClientTests: XCTestCase {
     func testRequestWithURL() async throws {
         // GIVEN
         let httpClient = HTTPClient(environment: .xkcd)
-        let url = try XCTUnwrap(GetXKCDStripRequest(id: 123).asURLRequest(with: .xkcd).url).absoluteString
+        let url = GetXKCDStripRequest(id: self.stripID).urlString(with: .xkcd)
         
         // WHEN
         let response: DataResponse<XKCDStrip> = try await httpClient.request(url: url)
-        let decodedStrip = try JSONDecoder().decode(XKCDStrip.self, from: response.data)
+        let decodedStrip = try httpClient.dispatcher.decoder.decode(XKCDStrip.self, from: response.data)
         
         // THEN
         XCTAssertEqual(response.status, .ok)
@@ -73,11 +78,11 @@ final class HTTPClientTests: XCTestCase {
     func testRequestDecodedWithURL() async throws {
         // GIVEN
         let httpClient = HTTPClient(environment: .xkcd)
-        let url = try XCTUnwrap(GetXKCDStripRequest(id: 123).asURLRequest(with: .xkcd).url).absoluteString
+        let url = GetXKCDStripRequest(id: self.stripID).urlString(with: .xkcd)
         
         // WHEN
         let response = try await httpClient.request(url: url)
-        let decodedStrip = try JSONDecoder().decode(XKCDStrip.self, from: response.data)
+        let decodedStrip = try httpClient.dispatcher.decoder.decode(XKCDStrip.self, from: response.data)
         
         // THEN
         XCTAssertEqual(response.status, .ok)

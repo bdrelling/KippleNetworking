@@ -18,7 +18,7 @@ import Foundation
 /// Sources:
 /// - [Mozilla - HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 /// - [Wikipedia - List of HTTP Status Codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
-public enum HTTPStatusCode: Int, CaseIterable, Codable {
+public enum HTTPStatusCode: Int, Codable, CaseIterable {
     // MARK: ResponseType
 
     /// The response class representation of status codes, these get grouped by their first digit.

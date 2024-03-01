@@ -15,7 +15,7 @@ public final class NIONetworkRequestDispatcher {
 
     public init(decoder: JSONDecoder? = nil, client: AsyncHTTPClient.HTTPClient? = nil) {
         self.decoder = decoder ?? .safeISO8601
-        self.client = client ?? .init(eventLoopGroupProvider: .createNew)
+        self.client = client ?? .init(eventLoopGroupProvider: .singleton)
     }
 
     deinit {

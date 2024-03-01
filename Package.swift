@@ -2,6 +2,9 @@
 
 import PackageDescription
 
+// Since we rely on URLSession for efficient networking on Apple platforms, we strip the NIO dependencies out for those targets.
+// If you want to use Swift NIO and AsyncHTTPClient on Apple platforms, you should be able to simply remove this check
+// and include the package and product dependencies directly in their respective locations.
 #if os(Linux)
 let packageDependencies: [Package.Dependency] = [
     .package(url: "https://github.com/apple/swift-nio", from: "2.41.1"),
@@ -9,9 +12,9 @@ let packageDependencies: [Package.Dependency] = [
     .package(url: "https://github.com/swift-server/async-http-client", from: "1.11.5"),
 ]
 let productDependencies: [Target.Dependency] = [
-    .product(name: "AsyncHTTPClient", package: "async-http-client", condition: .when(platforms: [.linux])),
-    .product(name: "NIOConcurrencyHelpers", package: "swift-nio", condition: .when(platforms: [.linux])),
-    .product(name: "NIOHTTPCompression", package: "swift-nio-extras", condition: .when(platforms: [.linux])),
+    .product(name: "AsyncHTTPClient", package: "async-http-client"),
+    .product(name: "NIOConcurrencyHelpers", package: "swift-nio"),
+    .product(name: "NIOHTTPCompression", package: "swift-nio-extras"),
 ]
 #else
 let packageDependencies: [Package.Dependency] = []
@@ -30,7 +33,7 @@ let package = Package(
         .library(name: "KippleNetworking", targets: ["KippleNetworking"]),
     ],
     dependencies: packageDependencies + [
-        .package(url: "https://github.com/bdrelling/Kipple", revision: "7adb2ccc7b330e015cce810fc8d8e76670aa5404"),
+        .package(url: "https://github.com/bdrelling/Kipple", revision: "f1d909107828d12c863ba10c847cea6bfc45e139"),
         .package(url: "https://github.com/bdrelling/KippleTools", .upToNextMinor(from: "0.5.0")),
     ],
     targets: [

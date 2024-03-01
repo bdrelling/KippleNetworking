@@ -6,11 +6,8 @@ import Foundation
 
 extension Request {
     func asURLRequest(with environment: Environment) throws -> URLRequest {
-        let baseURL = self.baseURL ?? environment.baseURL.trimmingSlashes()
-        let path = self.path.trimmingSlashes()
-
-        let url = path.isEmpty ? baseURL : "\(baseURL)/\(path)"
-
+        let url = self.urlString(with: environment)
+        
         // Merge parameters together, preferring any overridden parameters on the request.
         let parameters = environment.parameters.merging(self.parameters, uniquingKeysWith: { _, parameter in parameter })
 

@@ -9,10 +9,7 @@ import NIOFoundationCompat
 
 extension Request {
     func asHTTPClientRequest(with environment: Environment) throws -> AsyncHTTPClient.HTTPClientRequest {
-        let baseURL = environment.baseURL.trimmingSlashes()
-        let path = self.path.trimmingSlashes()
-
-        var url = "\(baseURL)/\(path)"
+        var url = self.urlString(with: environment)
 
         // Merge parameters together, preferring any overridden parameters on the request.
         let parameters = environment.parameters.merging(self.parameters, uniquingKeysWith: { _, parameter in parameter })

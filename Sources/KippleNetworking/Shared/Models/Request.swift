@@ -106,3 +106,20 @@ public extension HTTPRequest {
         self.init(path: "", baseURL: url, method: method, parameters: parameters, body: body, headers: headers, encoding: encoding)
     }
 }
+
+// MARK: - Extensions
+
+extension Request {
+    /// Returns a `URL` for this request within the context of a provided `Environment`.
+    func url(with environment: Environment) -> URL? {
+        URL(string: self.urlString(with: environment))
+    }
+    
+    /// Returns a `String` representation of the `URL` for this request within the context of a provided `Environment`.
+    func urlString(with environment: Environment) -> String {
+        let baseURL = self.baseURL ?? environment.baseURL.trimmingSlashes()
+        let path = self.path.trimmingSlashes()
+
+        return path.isEmpty ? baseURL : "\(baseURL)/\(path)"
+    }
+}
